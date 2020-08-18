@@ -8,6 +8,9 @@ for learning purposes or for personal interests
 ## Python
 <ul>
 <li>Machine Learning</li>
+	<ul>
+		<li> <a href="https://github.com/manuelgilm/data_science-portafolio/blob/master/machine_learning/leak_detection/caspton_project.ipynb">Leak detection in water networks with Neural Networks</a></li>
+	</ul>
 <li>Natural Language Processing</li>
 <li>Forecasting</li>
 <li>Image</li>
