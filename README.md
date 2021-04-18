@@ -34,8 +34,3 @@ for learning purposes or for personal interests
 	</ul>
 </li>
 </ul>
-
-
-## R
-
-### Visualizations
