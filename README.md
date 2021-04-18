@@ -26,11 +26,4 @@ for learning purposes or for personal interests
 	</li>
 </ul>
 </li>
-<li>Reinforcement Learning
-	<ul>
-	<li>Control</li>
-	<li>Forecasting</li>
-	<li>Anomaly detection</li>
-	</ul>
-</li>
 </ul>
