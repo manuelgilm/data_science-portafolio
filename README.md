@@ -11,6 +11,9 @@ for learning purposes or for personal interests
 	<ul>
 		<li> <a href="https://github.com/manuelgilm/data_science-portafolio/blob/master/machine_learning/leak_detection/caspton_project.ipynb">Leak detection in water networks with Neural Networks</a></li>
 	</ul>
+	<ul>
+		<li><a href="https://github.com/manuelgilm/data_science-portafolio/blob/master/machine_learning/energy_efficiency_multi_target_regression_problem.ipynb">Energy Efficiency as a multi target regression problem with Tensorflow</li>
+	</ul>
 <li>Forecasting</li>
 <li>Computer Vision</li>
 <li>Dashboards and visualizations
