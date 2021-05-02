@@ -16,7 +16,7 @@ for learning purposes or for personal interests
 		</li>
 	</ul>
 	<ul>
-		<li><a href ="https://github.com/manuelgilm/data_science-portafolio/blob/master/machine_learning/house_price_estimation_with_multiple_data_input_types/1_house_price_estimation_with_multiple_data_input_types.ipynb"> House price estimation with multiple data input types
+		<li><a href ="https://github.com/manuelgilm/data_science-portafolio/blob/master/machine_learning/house_price_estimation_with_multiple_data_input_types/house_price_estimation_with_multiple_inputs-part1.ipynb"> House price estimation</a> with multiple data input types - Part 1
 		</li>
 	</ul>
 <li>Forecasting</li>
