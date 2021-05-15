@@ -14,6 +14,5 @@ All this features are in cm.
 ## API
 
 ![FastAPI](fastapi_logo.png)
-The API was created with FastAPI, a modern web framework which allows build APIs, in this case to deploy machine learning models.
 
-The folder `app_classifier` contains all the necessary files to deploy this API on Heroku. 
+The API was created with FastAPI, a modern web framework which allows build APIs, in this case to deploy machine learning models. The folder `app_classifier` contains all the necessary files to deploy this API on Heroku. 
