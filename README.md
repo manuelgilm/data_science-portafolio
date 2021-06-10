@@ -19,6 +19,11 @@ for learning purposes or for personal interests
 		<li><a href ="https://github.com/manuelgilm/data_science-portafolio/blob/master/machine_learning/house_price_estimation_with_multiple_data_input_types/house_price_estimation_with_multiple_inputs-part1.ipynb"> House price estimation</a> with multiple data input types - Part 1
 		</li>
 	</ul>
+	<ul>
+		<li>
+			<a href = "https://github.com/manuelgilm/data_science-portafolio/tree/master/machine_learning/using_callbacks_tensorflow">Using Callbacks with TensorFlow</a>: You can find a more detailed explanation in this post.
+		</li>
+	</ul>
 <li>Forecasting</li>
 <li>Computer Vision</li>
 <li>Dashboards and visualizations
