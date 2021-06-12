@@ -18,7 +18,7 @@ for learning purposes or for personal interests
 	</ul>
 	<ul>
 		<li>
-			<a href = "https://github.com/manuelgilm/data_science-portafolio/tree/master/machine_learning/using_callbacks_tensorflow">Using Callbacks with TensorFlow</a>: You can find a more detailed explanation in this <a href = "https://python.plainenglish.io/how-to-use-python-and-fastapi-to-deploy-machine-learning-models-on-heroku-61b96271d5b3">post</a>.
+			<a href = "https://github.com/manuelgilm/data_science-portafolio/tree/master/machine_learning/using_callbacks_tensorflow">Using Callbacks with TensorFlow</a>: You can find a more detailed explanation in this <a href = "https://python.plainenglish.io/how-to-use-callbacks-with-tensorflow-and-keras-d0ecfc3961af">post</a>.
 		</li>
 	</ul>
 	<ul>
