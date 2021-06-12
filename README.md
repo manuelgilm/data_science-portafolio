@@ -9,7 +9,7 @@ for learning purposes or for personal interests
 <ul>
 <li>Machine Learning</li>
 	<ul>
-		<li><a href="https://github.com/manuelgilm/data_science-portafolio/blob/master/machine_learning/energy_efficiency_regression/energy_efficiency_multi_target_regression_problem.ipynb">Energy Efficiency as a multi target regression problem with Tensorflow.  You can find a more detailed explanation in this <a href="https://manuel-gilm.medium.com/multi-target-regression-with-tensorflow-a7d974cf5d89">post</a>
+		<li><a href="https://github.com/manuelgilm/data_science-portafolio/blob/master/machine_learning/energy_efficiency_regression/energy_efficiency_multi_target_regression_problem.ipynb">Energy Efficiency as a multi target regression problem with Tensorflow.</a>  You can find a more detailed explanation in this <a href="https://manuel-gilm.medium.com/multi-target-regression-with-tensorflow-a7d974cf5d89">post</a>
 		</li>
 	</ul>
 	<ul>
