@@ -26,6 +26,11 @@ for learning purposes or for personal interests
 			<a href = "https://python.plainenglish.io/how-to-use-python-and-fastapi-to-deploy-machine-learning-models-on-heroku-61b96271d5b3">Simple Machine Learning API</a>
 		</li>	
 	</ul>
+	<ul>
+		<li>
+			<a href = "https://github.com/manuelgilm/data_science-portafolio/tree/master/machine_learning/moviereview_classification">Moview Review Classification</a>: In this notebook I show how to use scikit-learn to classify movie reviews. You can see a more elaborate explanation in this post.
+		</li>
+	</ul>
 <li>Dashboards and visualizations
 <ul>
 	<li><a href="https://github.com/manuelgilm/data_science-portafolio/tree/master/dashboards/simple_covid_dashboard"> Covid 2019 disease dashboard</a> This dashboard was done with dash and plotly libraries from Python</li>
