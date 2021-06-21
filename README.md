@@ -28,7 +28,7 @@ for learning purposes or for personal interests
 	</ul>
 	<ul>
 		<li>
-			<a href = "https://github.com/manuelgilm/data_science-portafolio/tree/master/machine_learning/moviereview_classification">Moview Review Classification</a>: In this notebook I show how to use scikit-learn to classify movie reviews. You can see a more elaborate explanation in this post.
+			<a href = "https://github.com/manuelgilm/data_science-portafolio/tree/master/machine_learning/moviereview_classification">Moview Review Classification</a>: In this notebook I show how to use scikit-learn to classify movie reviews. You can see a more elaborate explanation in this [post](https://manuel-gilm.medium.com/movie-review-text-classification-using-scikit-learn-d72cd375a7d7).
 		</li>
 	</ul>
 <li>Dashboards and visualizations
