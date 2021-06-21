@@ -1,4 +1,4 @@
-![nlp + scikit-learn](nlp_sklearn.png)
+![nlp + scikit-learn](images/nlp_sklearn.png)
 
 # Movie review classification.
 
