@@ -33,6 +33,12 @@ To visualize the **Embedding Space**, you need to upload some files to this [web
 
 On the left side of the website you will see an option to upload the data.
 
-<p align="center">
+<p align = "center">
   <img src="images/embedding_projector1.png">
+</p>
+
+To visualize the Embedding space you need to reduce the dimension of the vectors, **Embedding Projector** provides some algorithms, but we should use *PCA* and be sure to select the 3D component.
+
+<p align = "center">
+    <img src = "images/embedding_projector2.png">
 </p>
