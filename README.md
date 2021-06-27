@@ -33,7 +33,7 @@ for learning purposes or for personal interests
 	</ul>
 	<ul>
 		<li>
-			<a href="https://github.com/manuelgilm/data_science-portafolio/tree/master/machine_learning/moviereview_classification_with_ml">Using Word Embeddings with TensorFlow</a> for sentiment Analysis. To see a more elaborate of this project you can check this <a href = "https://manuel-gilm.medium.com/using-word-embeddings-with-tensorflow-for-movie-review-text-classification-6c943d14cca2">post on medium.</a>
+			<a href="https://github.com/manuelgilm/data_science-portafolio/tree/master/machine_learning/moviereview_classification_with_ml">Using Word Embeddings with TensorFlow</a> for sentiment Analysis. To see a more elaborate explanation of this project you can check this <a href = "https://manuel-gilm.medium.com/using-word-embeddings-with-tensorflow-for-movie-review-text-classification-6c943d14cca2">post on medium.</a>
 		</li>
 	</ul>
 <li>Dashboards and visualizations
