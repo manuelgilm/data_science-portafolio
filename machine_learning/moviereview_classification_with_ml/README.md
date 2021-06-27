@@ -1,4 +1,7 @@
-![Using word embeddings](images/word_embedding.png)
+<p align = "center">
+    <img src="images/word_embedding.png">
+</p>
+
 
 # Movie review classification.
 
@@ -12,12 +15,24 @@ To run the provided notebook you need to create a new anaconda environment. You 
 
     conda env create -f moviereview_classification_with_ml.yml
     conda activate activate moviereview_classification_with_ml
-    
+
 After activating the environment you can run the jupyter notebook.
 
 ### Using Docker.
 
 You can use **Docker** to run the **Jupyter Notebook** directly, you only need to follow the next steps.
 
-    docker pull gilsama/movie_review
-    docker run -p 8888:8888 gilsama/movie_review
+    docker pull gilsama/wordembeddings_moviereviewclassification
+    docker run -p 8888:8888 gilsama/wordembeddings_moviereviewclassification
+
+## Visualizing the Embedding Layer
+
+To visualize the **Embedding Space**, you need to upload some files to this [website](https://projector.tensorflow.org/). The files are:
+* vecs.tsv
+* meta.tsv
+
+On the left side of the website you will see an option to upload the data.
+
+<p align="center">
+  <img src="images/embedding_projector1.png">
+</p>
