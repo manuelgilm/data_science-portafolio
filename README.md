@@ -31,6 +31,11 @@ for learning purposes or for personal interests
 			<a href = "https://github.com/manuelgilm/data_science-portafolio/tree/master/machine_learning/moviereview_classification">Moview Review Classification</a>: In this notebook I show how to use scikit-learn to classify movie reviews. You can see a more elaborate explanation in this <a href = "https://manuel-gilm.medium.com/movie-review-text-classification-using-scikit-learn-d72cd375a7d7">post</a>.
 		</li>
 	</ul>
+	<ul>
+		<li>
+			<a href="https://github.com/manuelgilm/data_science-portafolio/tree/master/machine_learning/moviereview_classification_with_ml">Using Word Embeddings with TensorFlow</a> for sentiment Analysis. To see a more elaborate explanation of this project you can check this <a href = "https://manuel-gilm.medium.com/using-word-embeddings-with-tensorflow-for-movie-review-text-classification-6c943d14cca2">post on medium.</a>
+		</li>
+	</ul>
 <li>Dashboards and visualizations
 <ul>
 	<li><a href="https://github.com/manuelgilm/data_science-portafolio/tree/master/dashboards/simple_covid_dashboard"> Covid 2019 disease dashboard</a> This dashboard was done with dash and plotly libraries from Python</li>
