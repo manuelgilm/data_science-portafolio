@@ -1,0 +1,6 @@
+scikit-learn==0.24.2
+plotly==4.14.3
+numpy==1.20.3
+notebook==6.4.0
+pandas==1.2.4
+matplotlib==3.4.2

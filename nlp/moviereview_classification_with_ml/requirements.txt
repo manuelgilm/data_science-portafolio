@@ -1,0 +1,9 @@
+tensorflow==2.2.1
+scikit-learn==0.24.2
+pydot==1.4.2
+pandas==1.2.5
+numpy==1.18.5
+matplotlib==3.4.2
+notebook==6.4.0
+graphviz==0.16
+Keras-Preprocessing==1.1.2
