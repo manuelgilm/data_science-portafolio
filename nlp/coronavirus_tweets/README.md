@@ -17,10 +17,3 @@ To run the provided notebook you need to create a new anaconda environment. You 
     conda activate activate coronavirus_tweets
 
 After activating the environment you can run the jupyter notebook.
-
-### Using Docker.
-
-You can use **Docker** to run the **Jupyter Notebook** directly, you only need to follow the next steps.
-
-    docker pull gilsama/coronavirus_tweets
-    docker run -p 8888:8888 gilsama/coronavirus_tweets
