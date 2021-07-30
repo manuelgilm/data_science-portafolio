@@ -36,7 +36,7 @@ Data science repository where I showcase Machine Learning and data scientist pro
 		</a> This notebook shows how to implement a basic text classifier using scikit learn.
 	</li>
 	<li>
-		<a href="https://github.com/manuelgilm/data_science-portafolio/tree/master/nlp/coronavirus_tweets">Tweet Classification Using Transfer Learning and Word Embedding</a>. A more elaborate explanation of this notebook can be found in the next post.
+		<a href="https://github.com/manuelgilm/data_science-portafolio/tree/master/nlp/coronavirus_tweets">Tweet Classification Using Transfer Learning and Word Embedding</a>. A more elaborate explanation of this notebook can be found in the <a href="https://manuel-gilm.medium.com/using-transfer-learning-with-word-embeddings-for-text-classification-tasks-d16386251672">next post</a>.
 	</li>
 </ul>
 
