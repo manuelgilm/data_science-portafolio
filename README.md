@@ -1,5 +1,5 @@
 
-# Portafolio
+# Portfolio
 
 Data science repository where I showcase Machine Learning and data scientist projects overall. These projects are done for learning purposes or for personal interests
 
