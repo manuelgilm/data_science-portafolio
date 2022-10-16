@@ -1,0 +1,5 @@
+from distutils import core
+
+
+azureml-core
+azureml-dataset-runtime
