@@ -5,8 +5,9 @@ import pandas as pd
 
 parser = argparse.ArgumentParser()
 
-parser.add_argument('--dataset_name',dest='dataset_name')
+parser.add_argument('--filename',dest='dataset_name')
 parser.add_argument('--output-folder',dest="folder")
+parser.add_argument('--dataset', dest="dataset")
 
 args = parser.parse_args()
 run = Run.get_context()
