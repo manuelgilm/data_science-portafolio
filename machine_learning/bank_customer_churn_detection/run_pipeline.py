@@ -1,5 +1,7 @@
+from email.policy import default
+from multiprocessing.spawn import prepare
 from azureml.core import Dataset, Experiment
-from azureml.pipeline.core import Pipeline
+from azureml.pipeline.core import Pipeline, PipelineData
 from azureml.pipeline.steps import PythonScriptStep
 from azureml.core.runconfig import RunConfiguration
 from azureml.core.conda_dependencies import CondaDependencies
@@ -17,27 +19,67 @@ run_config.environment.python.conda_dependencies = packages
 # get workspace
 ws = get_workspace()
 
+#get datastore
+default_datastore = ws.get_default_datastore()
+
 #get dataset 
 dataset = Dataset.get_by_name(ws,"bank_customer_churn")
 
 # create link between pipelines
-data_link = OutputFileDatasetConfig("datalink")
 dataset_name = "bank_customer_churn_detection"
+
+# create an output dataset
+prepped_data = PipelineData(name="preprocessed_data", datastore=default_datastore).as_dataset()
+training_data = PipelineData(name="training_data", datastore=default_datastore).as_dataset()
+testing_data = PipelineData(name="testing_data", datastore=default_datastore).as_dataset()
 
 step1 = PythonScriptStep(
     name = "Data Preprocessing",
     source_directory = "scripts\pipeline_scripts",
-    script_name="processing_data.py",
+    script_name="step1_processing_data.py",
     compute_target="ml-testing2",
     runconfig = run_config,
+    outputs=[prepped_data],
     arguments = [
         '--filename',dataset_name,
         '--dataset', dataset.as_named_input(dataset_name),
-        '--output-folder', data_link
+        '--preprocessed-data', prepped_data
     ]
 )
 
-pipeline = Pipeline(workspace=ws, steps=[step1], description="Loading data for preprocessing")
+step2 = PythonScriptStep(
+    name="Split data",
+    source_directory="scripts\pipeline_scripts",
+    script_name="step2_split_data.py",
+    compute_target="ml-testing2",
+    runconfig=run_config,
+    inputs=[prepped_data.parse_delimited_files()],
+    outputs = [training_data, testing_data],
+    arguments=[
+        '--filename', dataset_name,
+        '--output-training-data',training_data,
+        '--output-testing-data', testing_data
+    ]
+)
+
+step3 = PythonScriptStep(
+    name="Model training",
+    source_directory = "scripts\pipeline_scripts",
+    script_name = "step3_train_model.py",
+    compute_target="ml-testing2",
+    runconfig=run_config,
+    inputs=[training_data.parse_delimited_files()]
+)
+
+step4 = PythonScriptStep(
+    name = "Model Testing",
+    source_directory = "scripts\pipeline_scripts",
+    script_name = "step4_score_model.py",
+    compute_target="ml-testing2",
+    runconfig=run_config,
+    inputs=[testing_data.parse_delimited_files()],
+)
+pipeline = Pipeline(workspace=ws, steps=[step1, step2,step3, step4], description="Loading data for preprocessing")
 
 experiment = Experiment(workspace=ws, name="bank_custumer_churn_detection")
 experiment.submit(pipeline)
