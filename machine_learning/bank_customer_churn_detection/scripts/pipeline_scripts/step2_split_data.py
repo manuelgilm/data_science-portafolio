@@ -11,24 +11,17 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--filename',dest='dataset_name')
 parser.add_argument('--output-training-data', dest="output_training_data")
 parser.add_argument('--output-testing-data', dest="output_testing_data")
+parser.add_argument('--features', dest='features')
+parser.add_argument('--label', dest='label')
 
 args = parser.parse_args()
 run = Run.get_context()
 print(args)
 dataset = run.input_datasets["preprocessed_data"].to_pandas_dataframe()
-
-features = [
-    "balance",
-    "products_number",
-    "credit_card",
-    "tenure",
-    "age",
-    "gender_Female",
-    "gender_Male",
-    "credit_score"
-]
-
-label = "active_member"
+features = [feature for feature in args.features.split(",")]
+print("FEATURES")
+print(features)
+label = args.label
 
 x_train, x_test, y_train, y_test = train_test_split(dataset[features],dataset[label], test_size=0.25, random_state=1)
 

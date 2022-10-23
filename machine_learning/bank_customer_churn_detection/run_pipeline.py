@@ -1,6 +1,5 @@
-from email.policy import default
-from multiprocessing.spawn import prepare
 from azureml.core import Dataset, Experiment
+from azureml.pipeline.core.graph import PipelineParameter
 from azureml.pipeline.core import Pipeline, PipelineData
 from azureml.pipeline.steps import PythonScriptStep
 from azureml.core.runconfig import RunConfiguration
@@ -33,6 +32,22 @@ prepped_data = PipelineData(name="preprocessed_data", datastore=default_datastor
 training_data = PipelineData(name="training_data", datastore=default_datastore).as_dataset()
 testing_data = PipelineData(name="testing_data", datastore=default_datastore).as_dataset()
 
+# parameters
+label = PipelineParameter(name="label",default_value="active_member")
+
+features_list = [
+    "balance",
+    "products_number",
+    "credit_card",
+    "tenure",
+    "age",
+    "gender_Female",
+    "gender_Male",
+    "credit_score"
+]
+features = PipelineParameter(name="features",default_value=",".join(features_list))
+
+
 step1 = PythonScriptStep(
     name = "Data Preprocessing",
     source_directory = "scripts\pipeline_scripts",
@@ -58,7 +73,9 @@ step2 = PythonScriptStep(
     arguments=[
         '--filename', dataset_name,
         '--output-training-data',training_data,
-        '--output-testing-data', testing_data
+        '--output-testing-data', testing_data,
+        '--features', features,
+        '--label', label
     ]
 )
 
@@ -68,7 +85,11 @@ step3 = PythonScriptStep(
     script_name = "step3_train_model.py",
     compute_target="ml-testing2",
     runconfig=run_config,
-    inputs=[training_data.parse_delimited_files()]
+    inputs=[training_data.parse_delimited_files()],
+    arguments=[        
+        '--features', features,
+        '--label', label
+        ]
 )
 
 step4 = PythonScriptStep(
