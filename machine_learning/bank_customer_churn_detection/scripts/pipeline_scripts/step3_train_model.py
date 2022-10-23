@@ -20,3 +20,4 @@ x_train, x_test, y_train, y_test = train_test_split(training_data[features],trai
 
 clf = RandomForestClassifier()
 clf.fit(x_train, y_train)
+
