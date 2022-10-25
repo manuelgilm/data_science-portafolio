@@ -1,3 +1,4 @@
+from random import Random
 from azureml.core import Run
 import os 
 import argparse
@@ -19,5 +20,14 @@ training_data = run.input_datasets["training_data"].to_pandas_dataframe()
 x_train, x_test, y_train, y_test = train_test_split(training_data[features],training_data[label], test_size=0.25, random_state=1)
 
 clf = RandomForestClassifier()
-clf.fit(x_train, y_train)
+# training random forest classifier
+clf.fit(x_train[features], y_train)
+
+# getting predictions
+predictions = clf.predict(x_test)
+
+print(predictions)
+
+
+
 
