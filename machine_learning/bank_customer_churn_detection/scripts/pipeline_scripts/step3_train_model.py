@@ -1,10 +1,16 @@
+from multiprocessing.connection import Pipe
 from random import Random
 from azureml.core import Run
 import os 
 import argparse
 import pandas as pd
+import numpy as np
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
+from sklearn.pipeline import Pipeline
+from sklearn.compose import ColumnTransformer
+from sklearn.impute import SimpleImputer
+
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--features', dest='features')
@@ -19,12 +25,23 @@ training_data = run.input_datasets["training_data"].to_pandas_dataframe()
 
 x_train, x_test, y_train, y_test = train_test_split(training_data[features],training_data[label], test_size=0.25, random_state=1)
 
-clf = RandomForestClassifier()
+# create pipeline
+numeric_columns = features
+numeric_imputer = SimpleImputer(missing_values=np.nan, strategy='constant', fill_value = 0)
+preprocessor = ColumnTransformer(
+    transformers = [("num", numeric_imputer, numeric_columns)]
+)
+
+pipeline = Pipeline([
+    ('preprocessing',preprocessor),
+    ('classifier',RandomForestClassifier())
+    ])
+
 # training random forest classifier
-clf.fit(x_train[features], y_train)
+pipeline.fit(x_train[features], y_train)
 
 # getting predictions
-predictions = clf.predict(x_test)
+predictions = pipeline.predict(x_test)
 
 print(predictions)
 
