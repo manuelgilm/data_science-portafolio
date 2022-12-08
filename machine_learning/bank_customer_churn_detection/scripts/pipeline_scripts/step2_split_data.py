@@ -23,6 +23,9 @@ print("FEATURES")
 print(features)
 label = args.label
 
+print("DATASET")
+print(dataset.head())
+
 x_train, x_test, y_train, y_test = train_test_split(dataset[features],dataset[label], test_size=0.25, random_state=1)
 
 training_dataset = pd.concat([x_train, y_train], axis=1)

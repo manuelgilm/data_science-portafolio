@@ -41,12 +41,11 @@ features_list = [
     "credit_card",
     "tenure",
     "age",
-    "gender_Female",
-    "gender_Male",
     "credit_score"
 ]
 features = PipelineParameter(name="features",default_value=",".join(features_list))
-
+    # "gender_Female",
+    # "gender_Male",
 
 step1 = PythonScriptStep(
     name = "Data Preprocessing",
