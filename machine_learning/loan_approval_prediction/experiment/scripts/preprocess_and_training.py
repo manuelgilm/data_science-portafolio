@@ -11,7 +11,7 @@ ws = run.experiment.workspace
 df = ws.datasets.get("loan_data").to_pandas_dataframe()
 
 ### DATA PREPROCESSING
-categorical_columns = ["Gender","Married","Education","Self","Dependents","Property_Area"]
+categorical_columns = ["Gender","Married","Education","Dependents","Property_Area"]
 numerical_columns = ["ApplicantIncome","CoapplicantIncome","LoanAmount"]
 label = "Loan_Status"
 
