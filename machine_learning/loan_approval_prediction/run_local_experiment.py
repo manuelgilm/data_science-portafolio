@@ -7,7 +7,7 @@ from azureml.core.conda_dependencies import CondaDependencies
 ws = get_workspace_from_config(config_path="./configs")
 
 # creating packages
-conda_packages = CondaDependencies.create(conda_packages=["pandas","scikit-learn", "matplotlib"])
+conda_packages = CondaDependencies.create(conda_packages=["pandas","scikit-learn", "matplotlib"], pip_packages=["mlflow","joblib"])
 
 # creating and registering environment
 env = Environment("loanEnvExperiment")
@@ -17,7 +17,7 @@ env.register(workspace=ws)
 # creating script configuration
 script_config = ScriptRunConfig(
     source_directory="./experiment/scripts",
-    script="preprocess_and_training.py",
+    script="preprocess_and_training_mlflow.py",
     environment=env
 )
 

@@ -1,6 +1,8 @@
 from azureml.core import Run
-import joblib
-import time
+import azureml
+import pandas as pd
+import mlflow
+
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import (
@@ -12,8 +14,6 @@ from sklearn.metrics import (
     PrecisionRecallDisplay,
     ConfusionMatrixDisplay,
 )
-import tempfile
-import pandas as pd
 
 run = Run.get_context()
 
@@ -44,26 +44,20 @@ recall = recall_score(y_test, predictions)
 precision = precision_score(y_test, predictions)
 f1 = f1_score(y_test, predictions)
 
-run = Run.get_context()
+# Logging metrics with mlflow
+mlflow_uri = azureml.mlflow.get_mlflow_tracking_uri()
+mlflow.set_tracking_uri(mlflow_uri)
+mlflow.create_experiment("mlflow-experiment")
+mlflow.set_experiment("mlflow-experiment")
 
-run.log_list(name="predictions", value=predictions)
+with mlflow.start_run() as mlflow_run:
+    mlflow_run.log_metrics(
+        {
+            "accuracy2": accuracy,
+            "recall2": recall,
+            "precision2": precision,
+            "f1_score2": f1,
+        }
+    )
 
-# logging metrics
-run.log(name="accuracy", value=accuracy)
-run.log(name="precision_score", value=precision)
-run.log(name="recall_score", value=recall)
-run.log(name="f1_score", value=f1)
-
-# saving the model
-model_file = "outputs/loan_status_predictor.pkl"
-joblib.dump(value=lclf, filename=model_file)
-time.sleep(60)
-#registering model
-run.register_model(
-    model_name="loan_status_predictor",
-    model_path="outputs/loan_status_predictor.pkl",
-    tags={"algorithm":"LogisticRegression"},
-    model_framework="scikit-learn",
-    datasets="loan_data"
-)
 run.complete()
