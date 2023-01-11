@@ -1,6 +1,8 @@
-from azureml.core import Run
+from azureml.core import Run, Model
+
 import joblib
 import time
+import sklearn
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import (
@@ -57,13 +59,13 @@ run.log(name="f1_score", value=f1)
 # saving the model
 model_file = "outputs/loan_status_predictor.pkl"
 joblib.dump(value=lclf, filename=model_file)
-time.sleep(60)
-#registering model
-run.register_model(
-    model_name="loan_status_predictor",
-    model_path="outputs/loan_status_predictor.pkl",
-    tags={"algorithm":"LogisticRegression"},
-    model_framework="scikit-learn",
-    datasets="loan_data"
+Model.register(
+    workspace=ws,
+    model_path = model_file,
+    model_name = model_file.split("/")[-1].split(".")[0],
+    tags = {"model":"sklearn"},
+    model_framework = Model.Framework.SCIKITLEARN,
+    model_framework_version = sklearn.__version__,
 )
+
 run.complete()
