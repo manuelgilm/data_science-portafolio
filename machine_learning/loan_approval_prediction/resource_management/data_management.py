@@ -1,5 +1,47 @@
 from azureml.core import Datastore, Dataset
 
+def create_storage_account(
+    storage_client, storage_account_name, resource_group_name, location
+):
+    """# create storage account within the resource group, then create a container."""
+    availability_result = storage_client.storage_accounts.check_name_availability(
+        {"name": storage_account_name}
+    )
+    if availability_result.name_available:
+        # The name is available, so provision the account
+        poller = storage_client.storage_accounts.begin_create(
+            resource_group_name,
+            storage_account_name,
+            {
+                "location": location,
+                "kind": "StorageV2",
+                "sku": {"name": "Standard_LRS"},
+            },
+        )
+        # Long-running operations return a poller object; calling poller.result()
+        # waits for completion.
+        account_result = poller.result()
+        print(f"Provisioned storage account {account_result.name}")
+    else:
+        print("STORAGE ACCOUNT NAME ALREADY TAKEN")
+
+def create_blob_container(storage_client, storage_account_name, resource_group_name, container_name):
+    """Creates blob container"""
+    # Retrieve the account's primary access key and generate a connection string.
+    keys = storage_client.storage_accounts.list_keys(
+        resource_group_name, storage_account_name
+    )
+    conn_string = f"""DefaultEndpointsProtocol=https;
+                      EndpointSuffix=core.windows.net;
+                      AccountName={storage_account_name};
+                      AccountKey={keys.keys[0].value}"""
+    print(f"Connection string: {conn_string}")
+    # Provision the blob container in the account (this call is synchronous)
+    container = storage_client.blob_containers.create(
+        resource_group_name, storage_account_name, container_name, {}
+    )
+    print(f"Provisioned blob container {container.name}")
+
 def create_blob_datastore(
     workspace, datastore_name, storage_account_name, blob_container_name, account_key
 ):
