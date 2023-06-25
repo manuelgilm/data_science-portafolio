@@ -2,6 +2,8 @@ database_name: "default"
 feature_table_name: "airbnb_feature_table"
 feature_table_path: "dbfs:/mnt/feature_tables/airbnb/"
 source_data: "dbfs:/FileStore/datasets/airbnb/listings.csv"
+label: "price"
+experiment_name: /Shared/mlflow/projects/airbnb_price_prediction
 columns_to_keep:
     - "id"
     - "host_is_superhost"

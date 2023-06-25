@@ -77,6 +77,7 @@ def create_feature_table(config: dict, fs: FeatureStoreClient, sdf: DataFrame) -
     feature_table_name = f"{config['database_name']}.{config['feature_table_name']}"
     fs.create_table(
         name=feature_table_name,
+        df = sdf,
         primary_keys=["id"],
         schema=sdf.schema,
         description="Feature table for airbnb price prediction",
