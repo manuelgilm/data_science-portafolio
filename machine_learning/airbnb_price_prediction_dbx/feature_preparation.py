@@ -4,33 +4,7 @@ from pyspark.sql import functions as F
 from pyspark.sql.types import DoubleType, IntegerType
 
 from databricks.feature_store import FeatureStoreClient
-
-
-def read_data(config: dict) -> DataFrame:
-    """Reads the data from dbfs and returns a spark dataframe.
-
-    params: config: dict
-    return: sdf: spark dataframe
-    """
-    data_path = config["source_data"]
-    print(f"Reading the data from dbfs: {data_path}")
-    sdf = spark.read.csv(
-        data_path, header=True, inferSchema=True, multiLine="true", escape='"'
-    )
-    return sdf
-
-
-def get_configurations(filename: str) -> dict:
-    """Reads the configuration file from dbfs and returns a dictionary.
-
-    params: filename: str
-    return: config: dict
-    """
-    with open(f"/dbfs/FileStore/configs/{filename}.yaml", "rb") as f:
-        print(f"Reading the configuration file from dbfs: {filename}.yaml")
-        config = yaml.load(f)
-    return config
-
+from utils import util_functions as uf
 
 def data_preparation(config: dict, sdf: DataFrame) -> DataFrame:
     """
@@ -88,7 +62,7 @@ def create_feature_table(config: dict, fs: FeatureStoreClient, sdf: DataFrame) -
 
 if __name__ == "__main__":
     fs = FeatureStoreClient()
-    config = get_configurations("feature_preparation")
-    sdf = read_data(config)
+    config = uf.get_configurations("feature_preparation")
+    sdf = uf.read_data(config)
     sdf = data_preparation(config, sdf)
     create_feature_table(config, fs, sdf)

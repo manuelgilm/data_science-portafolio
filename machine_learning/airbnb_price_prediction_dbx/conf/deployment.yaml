@@ -9,3 +9,12 @@ environments:
       - name: "pyspark_pipeline"
         spark_python_task:
           python_file: "file://pyspark_pipeline.py"
+      - name: "crossvalidation_pipeline"
+        spark_python_task:
+          python_file: "file://pyspark_pipeline_crossvalidation.py"
+      - name: "inference_pipeline"
+        spark_python_task:
+          python_file: "file://inference.py"
+      - name: "delete"
+        spark_python_task:
+          python_file: "file://delete_all.py"
