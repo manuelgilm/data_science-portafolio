@@ -1,6 +1,5 @@
 import mlflow
 from databricks.feature_store import FeatureStoreClient
-from pyspark.ml.regression import DecisionTreeRegressor
 from pyspark.ml.evaluation import RegressionEvaluator
 
 from utils import util_functions as uf
