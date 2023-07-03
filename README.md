@@ -18,6 +18,9 @@ Data science repository where I showcase Machine Learning and data scientist pro
 		<li>
 			<a href = "https://python.plainenglish.io/how-to-use-python-and-fastapi-to-deploy-machine-learning-models-on-heroku-61b96271d5b3">Simple Machine Learning API</a>
 		</li>	
+		<li>
+			<a href="https://github.com/manuelgilm/data_science-portafolio/tree/master/machine_learning/airbnb_price_prediction_dbx">Airbnb Price Prediction: This project leverages PySpark, dbx, Feature Store, and MLflow to create a price predictor.</a>		
+		</li>	
 	</ul>
 
 
