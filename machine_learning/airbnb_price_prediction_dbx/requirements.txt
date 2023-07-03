@@ -1,0 +1,2 @@
+dbx==0.8.15
+databricks-cli==0.17.7
