@@ -6,3 +6,6 @@ environments:
       - name: "feature_preparation"
         spark_python_task:
           python_file: "file://feature_preparation.py"
+      - name: "training"
+        spark_python_task:
+          python_file: "file://model_training.py"          
