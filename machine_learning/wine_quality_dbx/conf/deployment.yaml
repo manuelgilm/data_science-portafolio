@@ -1,0 +1,8 @@
+build:
+  no_build: true
+environments:
+  default:
+    workflows:
+      - name: "feature_preparation"
+        spark_python_task:
+          python_file: "file://feature_preparation.py"
