@@ -9,3 +9,6 @@ environments:
       - name: "training"
         spark_python_task:
           python_file: "file://model_training.py"          
+      - name: "inferencing"
+        spark_python_task:
+          python_file: "file://model_inference.py"           
