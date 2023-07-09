@@ -1,4 +1,5 @@
 import mlflow 
+from databricks.feature_store import FeatureStoreClient
 
 from wine_quality.features import get_train_test_ids, get_training_testing_data
 from wine_quality.data_preparation import get_configurations

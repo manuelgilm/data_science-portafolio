@@ -2,3 +2,4 @@ feature_table_path: dbfs:/mnt/feature_tables/wine_quality/
 database_name: default
 feature_table_name: wine_quality_features
 description: Feature table for wine quality prediction
+experiment_name: /Shared/databricks_certification/experiments/wine_quality_classification

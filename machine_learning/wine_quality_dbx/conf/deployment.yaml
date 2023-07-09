@@ -12,3 +12,6 @@ environments:
       - name: "inferencing"
         spark_python_task:
           python_file: "file://model_inference.py"           
+      - name: "transition_model"
+        spark_python_task:
+          python_file: "file://transition_model.py"                     

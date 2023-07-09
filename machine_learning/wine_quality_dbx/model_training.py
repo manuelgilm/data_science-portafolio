@@ -12,6 +12,7 @@ from pyspark.ml.evaluation import BinaryClassificationEvaluator
 
 from wine_quality.features import get_train_test_ids, get_training_testing_data
 from wine_quality.data_preparation import get_configurations
+from wine_quality.model_func import create_mlflow_experiment
 
 import mlflow
 
@@ -33,19 +34,6 @@ def get_pipeline(columns: list) -> Pipeline:
 
     return pipeline
 
-def create_mlflow_experiment(experiment_name: str) -> None:
-    """
-    This function creates a mlflow experiment.
-
-    params: experiment_name: str
-
-    """
-    try:
-        mlflow.set_experiment(experiment_name)
-    except:
-        mlflow.create_experiment(experiment_name)
-        mlflow.set_experiment(experiment_name)
-
 
 if __name__ == "__main__":
     fs = FeatureStoreClient()
@@ -60,7 +48,7 @@ if __name__ == "__main__":
     train_sdf = train_set.load_df()
     test_sdf = test_set.load_df()
 
-    experiment_name = "/Shared/databricks_certification/experiments/wine_quality_classification"
+    experiment_name = configs["experiment_name"]
     create_mlflow_experiment(experiment_name=experiment_name)
 
     with mlflow.start_run(run_name="wine_quality_classification") as run:
