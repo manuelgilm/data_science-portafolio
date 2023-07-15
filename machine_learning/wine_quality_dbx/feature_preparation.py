@@ -1,3 +1,4 @@
+from pyspark.sql.types import IntegerType
 from wine_quality.data_preparation import get_dataframe, create_feature_table, get_configurations
 from pyspark.sql import functions as F
 
@@ -25,11 +26,16 @@ def clean_raw_data(sdf):
     params: sdf: spark dataframe
     return: sdf: spark dataframe
     """
+    sdf = sdf.drop_duplicates()
     sdf = sdf.dropna()
     sdf = sdf.withColumn("id", F.monotonically_increasing_id())
     for field in sdf.schema.fields:
         if " " in field.name:
             sdf = sdf.withColumnRenamed(field.name, field.name.replace(" ", "_"))
+        
+        if isinstance(field.dataType, IntegerType):
+            sdf = sdf.withColumn(field.name, F.col(field.name).cast("double"))
+    
     return sdf
 
 

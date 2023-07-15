@@ -46,6 +46,5 @@ def create_feature_table(
         schema=sdf.schema,
         primary_keys=["id"],
         description=description,
-        partition_columns=["id"],
         path=feature_table_path,
     )

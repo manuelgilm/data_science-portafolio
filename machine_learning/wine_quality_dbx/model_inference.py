@@ -14,8 +14,8 @@ def get_model(model_uri:str):
 
 if __name__=="__main__":
 
-    model_uri_fs = 'runs:/83356f31d0ba4652879dbd19373a45aa/fs_pipeline'
-    model_uri = 'runs:/83356f31d0ba4652879dbd19373a45aa/pipeline'
+    model_uri_fs = 'runs:/62defa3aafca470ea5294ac8bd5cfecd/fs_cv_pipeline'
+    model_uri = 'runs:/62defa3aafca470ea5294ac8bd5cfecd/cv_pipeline'
     configs = get_configurations(filename="common_params")
     train_ids, test_ids, feature_names = get_train_test_ids(configs=configs)
 

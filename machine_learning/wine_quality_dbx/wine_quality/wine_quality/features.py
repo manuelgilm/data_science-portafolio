@@ -18,7 +18,7 @@ def get_train_test_ids(configs: dict):
     feature_names = [
         field.name
         for field in feature_table.schema.fields
-        if field.name != "target" and field.name != "id"
+        if field.name != "target" and field.name != "id" and field.name != "quality"
     ]
     train_ids, test_ids = feature_table.select("id", "target").randomSplit(
         [0.8, 0.2], seed=42
