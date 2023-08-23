@@ -20,6 +20,12 @@ from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error
 
 
 def create_pipeline(feature_names: list) -> Pipeline:
+    """
+    Creates a pipeline for a given model and parameters.
+
+    :param feature_names: list of feature names
+    :return: pipeline
+    """
     imputer = ColumnTransformer(
         [
             (
@@ -35,7 +41,13 @@ def create_pipeline(feature_names: list) -> Pipeline:
 
 
 def objective_function(params, **kwargs):
+    """
+    Objective function for hyperopt.
 
+    :param params: parameters for the model
+    :param kwargs: additional parameters
+    :return: dict with loss and status
+    """
     params = {k:int(v) for k,v in params.items() if k.startswith("model")}
     pipeline = create_pipeline(feature_names=kwargs["feature_names"])   
     pipeline.set_params(**params)
@@ -50,8 +62,6 @@ def objective_function(params, **kwargs):
         scoring=metrics,
         return_train_score=True,
     )
-    print("CV_RESULTS")
-    print(cv_results)
     mlflow_logger(
         experiment_id=kwargs["experiment_id"],
         cv_results=cv_results,
@@ -72,6 +82,17 @@ def mlflow_logger(
     input_example: Union[np.array, pd.DataFrame],
     estimator,
 ) -> None:
+    """
+    Logs metrics and model in mlflow.
+
+    :param experiment_id: experiment id
+    :param cv_results: cross validation results
+    :param params: parameters for the model
+    :param signature: model signature
+    :param input_example: input example
+    :param estimator: model estimator
+    :return: None
+    """
     with mlflow.start_run(nested=True, experiment_id=experiment_id) as run:
         # logging testing metrics
         mlflow.log_metric("test_r2", cv_results["test_r2"].mean())
@@ -100,8 +121,17 @@ def train_model(
     feature_names: list,
     experiment_id:str
 ):
-    
+    """
+    Train a model.
 
+    :param x_train: training data
+    :param x_test: testing data
+    :param y_train: training target
+    :param y_test: testing target
+    :param feature_names: list of feature names
+    :param experiment_id: experiment id
+    :return: None
+    """
     trials = Trials()
     space = {
         "model__n_estimators": hp.quniform("model__n_estimators", low = 10 , high = 1000, q = 10),
@@ -134,6 +164,16 @@ def train_model(
 
 
 def train_best_model(x_train, y_train, x_test, y_test, feature_names, params):
+    """
+    Train the best model. This function has to be inside a mlflow run context.
+
+    :param x_train: training data
+    :param y_train: training target
+    :param x_test: testing data
+    :param y_test: testing target
+    :param feature_names: list of feature names
+    :param params: parameters for the model (best parameters)
+    """
     params = {k:int(v) for k,v in params.items() if k.startswith("model")}
     pipeline = create_pipeline(feature_names=feature_names)
     pipeline.set_params(**params)   
