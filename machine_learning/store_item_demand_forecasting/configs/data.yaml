@@ -1,0 +1,11 @@
+env:
+  local:
+    source: C:/Users/manue/Documents/kaggle_datasets/demand-forecasting
+
+  dbfs:
+    source: dbfs:/FileStore/datasets/demand_forecasting_kaggle/
+
+source_tables:
+  train: train.csv
+  test: test.csv
+  sample_submission: sample_submission.csv
