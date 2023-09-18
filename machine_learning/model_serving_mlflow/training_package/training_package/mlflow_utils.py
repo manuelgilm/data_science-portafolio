@@ -1,9 +1,10 @@
 import mlflow
 
-from mlflow.models import infer_signature
 from mlflow.models import ModelSignature
 from mlflow.types import ParamSchema
 from mlflow.types import ParamSpec
+from mlflow.types import Schema
+from mlflow.types import ColSpec
 
 import pandas as pd
 
@@ -37,7 +38,9 @@ def get_custom_signature(
 
     :return: signature
     """
-    data_schema = infer_signature(x, y)
+
+    input_schema = Schema([ColSpec(type="double",name= col) for col in x.columns])
+    output_schema = Schema([ColSpec(type="integer",name= col) for col in y.columns])
 
     type_map = {"str": "string", "int": "integer", "float": "float", "bool": "boolean"}
 
@@ -47,7 +50,7 @@ def get_custom_signature(
     ]
     params_schema = ParamSchema(params_spec)
     signature = ModelSignature(
-        inputs=data_schema.inputs, outputs=data_schema.outputs, params=params_schema
+        inputs=input_schema, outputs=output_schema, params=params_schema
     )
 
     return signature
