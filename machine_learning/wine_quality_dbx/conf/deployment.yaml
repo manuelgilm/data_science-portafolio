@@ -1,0 +1,32 @@
+build:
+  no_build: true
+environments:
+  default:
+    workflows:
+      - name: "feature_preparation"
+        spark_python_task:
+          python_file: "file://feature_preparation.py"
+      - name: "training"
+        spark_python_task:
+          python_file: "file://model_training.py"          
+      - name: "training_crossvalidation"
+        spark_python_task:
+          python_file: "file://model_training_crossvalidation.py" 
+      - name: "training_sklearn"
+        spark_python_task:
+          python_file: "file://model_training_sklearn.py"                        
+      - name: "training_sklearn_crossvalidation"
+        spark_python_task:
+          python_file: "file://model_training_sklearn_crossvalidation.py"                 
+      - name: "inferencing"
+        spark_python_task:
+          python_file: "file://model_inference.py"   
+      - name: "inference_sklearn"                  
+        spark_python_task:
+          python_file: "file://model_inference_sklearn.py"
+      - name: "transition_model"
+        spark_python_task:
+          python_file: "file://transition_model.py"                     
+      - name: "delete_all"
+        spark_python_task:
+          python_file: "file://delete_all.py"                               
