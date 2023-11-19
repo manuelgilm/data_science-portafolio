@@ -1,0 +1,24 @@
+build:
+  no_build: true
+
+environments:
+  default:
+    workflows:
+      - name: "house_price_estimation"
+        tasks:
+          - task_key: "creating_feature_tables"
+            spark_python_task:
+              python_file: "file://entrypoints/create_feature_table.py"
+          - task_key: "training_model"
+            spark_python_task:
+              python_file: "file://entrypoints/training_model.py"    
+          - task_key: "inferencing_model"
+            spark_python_task:
+              python_file: "file://entrypoints/inference_model.py"   
+
+      - name: "delete"
+        tasks:
+          - task_key: "delete_project"
+            spark_python_task:
+              python_file: "file://entrypoints/delete.py"
+

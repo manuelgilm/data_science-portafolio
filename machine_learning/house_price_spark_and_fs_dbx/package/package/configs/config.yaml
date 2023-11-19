@@ -1,0 +1,15 @@
+database_name: default
+table_name: california_housing
+model_name: ml_price_regressor
+target: MedHouseVal
+numerical_features:
+  - MedInc
+  - HouseAge
+  - AveRooms
+  - AveBedrms
+  - Population
+  - AveOccup
+  - Latitude
+  - Longitude
+experiment_name: /Shared/california_housing
+run_name: ml_regressor
