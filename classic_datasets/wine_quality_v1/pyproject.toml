@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "wine-quality-v1"
+version = "0.1.0"
+description = ""
+authors = ["Manuel Gil <manuelgilsitio@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.scripts]
+run = 'wine_quality_v1.run:main'
+
+[tool.poetry.dependencies]
+python = "^3.9"
+scikit-learn = "^1.3.2"
+pandas = "^2.1.4"
+mlflow = "^2.9.2"
+ucimlrepo = "^0.0.3"
+hyperopt = "^0.2.7"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
