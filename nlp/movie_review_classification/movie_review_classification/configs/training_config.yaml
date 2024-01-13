@@ -1,0 +1,11 @@
+training_configs:
+  output_dir: "test-trainer"
+  overwrite_output_dir: True
+  evaluation_strategy: "epoch"
+  num_train_epochs: 1
+
+mlflow_experiment:
+  name: "test-experiment"
+  artifact_location: "mlruns"
+
+base_model: "bert-base-uncased"

@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "movie-review-classification"
+version = "0.1.0"
+description = ""
+authors = ["Manuel Gil <manuelgilsitio@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.scripts]
+test = 'movie_review_classification.entrypoints.test:main'
+predict = 'movie_review_classification.entrypoints.predict:main'
+train = 'movie_review_classification.entrypoints.train:main'
+
+[tool.poetry.dependencies]
+python = "^3.9"
+mlflow = "^2.9.2"
+transformers = {version = "4.35.2", extras = ["torch"]}
+datasets = "^2.16.1"
+torch = "^2.1.2"
+evaluate = "^0.4.1"
+torchvision = "^0.16.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
