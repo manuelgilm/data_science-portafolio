@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/manue/Documents/data_science-portafolio/classification/iris_classifier/mlruns/842026706048656526/0241e3cd8ba64449bf31bb14faca05ad/artifacts
+end_time: 1707689613961
+entry_point_name: ''
+experiment_id: '842026706048656526'
+lifecycle_stage: active
+run_id: 0241e3cd8ba64449bf31bb14faca05ad
+run_name: masked-horse-502
+run_uuid: 0241e3cd8ba64449bf31bb14faca05ad
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1707689610285
+status: 3
+tags: []
+user_id: manue
