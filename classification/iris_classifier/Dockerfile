@@ -6,4 +6,4 @@ ENV PYTHONPATH=${PYTHONPATH}:${PWD}
 RUN pip3 install poetry 
 RUN poetry install  
 
-CMD ["poetry", "run", "mlflow","ui","--port","5000","--host","0.0.0.0"]
+CMD ["poetry", "run", "python", "run.py"]
