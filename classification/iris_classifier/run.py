@@ -37,11 +37,51 @@ def run_streamlit_app():
     )
 
 
+def score_dataset():
+    """Score the dataset."""
+    subprocess.run(
+        [
+            "poetry",
+            "run",
+            "predict",
+        ],
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+    )
+
+
+def train_model():
+    """Train the model."""
+    subprocess.run(
+        [
+            "poetry",
+            "run",
+            "train",
+        ],
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+    )
+
+
+def run_mode(mode: str):
+    """
+    Run the mode.
+
+    :param mode: The mode to run.
+    :return: The result of the mode.
+    """
+    modes = {
+        "EDA": run_streamlit_app,
+        "MLFLOW": run_mlflow_ui,
+        "TRAIN": train_model,
+        "SCORE": score_dataset,
+    }
+    return modes[mode]()
+
+
 if __name__ == "__main__":
     mode = os.environ.get("MODE", "EDA")
-    if mode == "EDA":
-        run_streamlit_app()
-    elif mode == "MLFLOW":
-        run_mlflow_ui()
+    if mode in ["EDA", "MLFLOW", "TRAIN", "SCORE"]:
+        run_mode(mode)
     else:
-        raise ValueError(f"Invalid mode: {mode}. Use EDA or MLFLOW.")
+        raise ValueError(f"Invalid mode: {mode}")

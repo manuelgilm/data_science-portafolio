@@ -3,6 +3,7 @@ import seaborn as sns
 import streamlit as st
 from iris_classifier.data.retrieval import get_dataset
 from iris_classifier.utils.utils import get_project_root
+from sklearn import datasets
 
 # Assuming you have loaded iris dataset
 df = get_dataset()
@@ -32,6 +33,21 @@ plt.figure(figsize=(8, 6))
 sns.heatmap(df.corr(), annot=True, cmap="coolwarm", fmt=".2f", linewidths=0.5)
 correlation_heatmap = plt.gcf()  # Get the current figure explicitly
 st.pyplot(correlation_heatmap)
+
+# Scatter plot
+st.subheader("The Iris dataset")
+iris = datasets.load_iris()
+_, ax = plt.subplots()
+scatter = ax.scatter(iris.data[:, 0], iris.data[:, 1], c=iris.target)
+ax.set(xlabel=iris.feature_names[0], ylabel=iris.feature_names[1])
+_ = ax.legend(
+    scatter.legend_elements()[0],
+    iris.target_names,
+    loc="lower right",
+    title="Classes",
+)
+scatter_plot = plt.gcf()
+st.pyplot(scatter_plot)
 
 # Pairplot
 st.subheader("Pairplot")
