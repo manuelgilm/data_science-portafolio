@@ -1,16 +1,14 @@
 from iris_classifier.data.retrieval import get_train_test_data
 from iris_classifier.inference.scoring import get_latest_run_id
 from iris_classifier.inference.scoring import get_predictions
+from iris_classifier.utils.utils import get_config
 
 
 def predict():
     """
     Predict using the iris classifier.
     """
-    config = {
-        "experiment_name": "iris_classifier",
-        "model_artifact": "iris_classifier",
-    }
+    config = get_config()
     x_train, x_test, y_train, y_test = get_train_test_data()
     run_id = get_latest_run_id(config["experiment_name"])
     predictions = get_predictions(run_id, x_test, config)

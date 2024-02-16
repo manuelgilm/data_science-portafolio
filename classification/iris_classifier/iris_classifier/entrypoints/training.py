@@ -4,16 +4,14 @@ from iris_classifier.train.ml_utils import get_classification_metrics
 from iris_classifier.train.ml_utils import get_confusion_matrix
 from iris_classifier.train.ml_utils import get_or_create_experiment
 from iris_classifier.train.pipelines import ClassifierPipeline
+from iris_classifier.utils.utils import get_config
 
 
 def train():
     """
     Train the iris classifier.
     """
-    config = {
-        "experiment_name": "iris_classifier",
-        "model_artifact": "iris_classifier",
-    }
+    config = get_config()
     x_train, x_test, y_train, y_test = get_train_test_data()
     experiment_id = get_or_create_experiment(config["experiment_name"])
 

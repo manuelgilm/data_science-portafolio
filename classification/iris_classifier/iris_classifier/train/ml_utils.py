@@ -25,8 +25,8 @@ def get_or_create_experiment(experiment_name: str) -> str:
         experiment_id = mlflow.get_experiment_by_name(
             name=experiment_name
         ).experiment_id
-    except Exception as e:
-        print(e)
+    except Exception:
+        print("Experiment does not exist, creating it.")
         experiment_id = mlflow.create_experiment(name=experiment_name)
     finally:
         mlflow.set_experiment(experiment_name)
