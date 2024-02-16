@@ -19,7 +19,7 @@ test='iris_classifier.entrypoints.test:test_get_dataset'
 get_pipeline='iris_classifier.entrypoints.test:test_get_pipeline'
 train='iris_classifier.entrypoints.training:train'
 show_eda='iris_classifier.entrypoints.eda:run_streamlit_app'
-
+predict='iris_classifier.entrypoints.predict:predict'
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
