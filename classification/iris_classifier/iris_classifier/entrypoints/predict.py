@@ -14,6 +14,7 @@ def predict():
     x_train, x_test, y_train, y_test = get_train_test_data()
     run_id = get_latest_run_id(config["experiment_name"])
     predictions = get_predictions(run_id, x_test, config)
+    print(type(predictions))
     map_predictions = {0: "setosa", 1: "versicolor", 2: "virginica"}
     predictions = [map_predictions[pred] for pred in predictions]
     pred_df = x_test.copy()

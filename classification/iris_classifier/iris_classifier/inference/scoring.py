@@ -2,10 +2,13 @@ from typing import Any
 from typing import Dict
 
 import mlflow
+import numpy as np
 import pandas as pd
 
 
-def get_predictions(run_id: str, x_test: pd.DataFrame, config: Dict[str, Any]):
+def get_predictions(
+    run_id: str, x_test: pd.DataFrame, config: Dict[str, Any]
+) -> np.ndarray:
     """
     Get predictions from the iris classifier.
 
@@ -21,7 +24,7 @@ def get_predictions(run_id: str, x_test: pd.DataFrame, config: Dict[str, Any]):
     return predictions
 
 
-def get_latest_run_id(experiment_name: str):
+def get_latest_run_id(experiment_name: str) -> str:
     """
     Get the latest run id from the experiment.
 
