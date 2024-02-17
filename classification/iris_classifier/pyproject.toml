@@ -15,11 +15,9 @@ streamlit = "^1.31.1"
 seaborn = "^0.13.2"
 
 [tool.poetry.scripts]
-test='iris_classifier.entrypoints.test:test_get_configs'
-get_pipeline='iris_classifier.entrypoints.test:test_get_pipeline'
 train='iris_classifier.entrypoints.training:train'
-show_eda='iris_classifier.entrypoints.eda:run_streamlit_app'
 predict='iris_classifier.entrypoints.predict:predict'
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"

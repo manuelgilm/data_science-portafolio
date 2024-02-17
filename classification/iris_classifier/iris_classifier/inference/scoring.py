@@ -1,5 +1,6 @@
 from typing import Any
 from typing import Dict
+from typing import Optional
 
 import mlflow
 import numpy as np
@@ -24,17 +25,21 @@ def get_predictions(
     return predictions
 
 
-def get_latest_run_id(experiment_name: str) -> str:
+def get_latest_run_id(experiment_name: str) -> Optional[str]:
     """
     Get the latest run id from the experiment.
 
     :param experiment_name: The name of the experiment.
     :return: The latest run id from the experiment.
     """
-    experiment = mlflow.get_experiment_by_name(experiment_name)
-    latest_run = mlflow.search_runs(
-        experiment_ids=experiment.experiment_id,
-        order_by=["start_time desc"],
-        max_results=1,
-    )
-    return latest_run.iloc[0]["run_id"]
+    try:
+        experiment = mlflow.get_experiment_by_name(experiment_name)
+        latest_run = mlflow.search_runs(
+            experiment_ids=experiment.experiment_id,
+            order_by=["start_time desc"],
+            max_results=1,
+        )
+        return latest_run.iloc[0]["run_id"]
+    except Exception as e:
+        print(e)
+        print("Experiment not found")
