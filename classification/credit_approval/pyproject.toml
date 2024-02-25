@@ -6,8 +6,18 @@ authors = ["Manuel Gil <manuelgilsitio@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = ">=3.10,<4.0"
+pandas = "^2.2.1"
+ucimlrepo = "^0.0.3"
+jupyter = "^1.0.0"
+matplotlib = "^3.8.3"
+seaborn = "^0.13.2"
+scikit-learn = "1.4.0"
+skdag = "^0.0.6"
+mlflow = "^2.10.2"
 
+[tool.poetry.scripts]
+get_data = "credit_approval.data.retrieval:get_data"
 
 [build-system]
 requires = ["poetry-core"]
