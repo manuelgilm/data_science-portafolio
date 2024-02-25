@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import mlflow
 import numpy as np
 import pandas as pd
+from credit_approval.utils.utils import get_project_root
 from sklearn.metrics import ConfusionMatrixDisplay
 from sklearn.metrics import PrecisionRecallDisplay
 from sklearn.metrics import RocCurveDisplay
@@ -17,6 +18,7 @@ from sklearn.metrics import recall_score
 def get_classification_metrics(
     y_true: Union[pd.DataFrame, pd.Series, np.ndarray],
     y_pred: Union[pd.DataFrame, pd.Series, np.ndarray],
+    prefix: str,
 ) -> Dict[str, float]:
     """
     Get the classification metrics.
@@ -26,10 +28,10 @@ def get_classification_metrics(
     :return: The classification metrics.
     """
     return {
-        "accuracy": accuracy_score(y_true, y_pred),
-        "precision": precision_score(y_true, y_pred),
-        "recall": recall_score(y_true, y_pred),
-        "f1": f1_score(y_true, y_pred),
+        f"{prefix}_accuracy": accuracy_score(y_true, y_pred),
+        f"{prefix}_precision": precision_score(y_true, y_pred),
+        f"{prefix}_recall": recall_score(y_true, y_pred),
+        f"{prefix}_f1": f1_score(y_true, y_pred),
     }
 
 
@@ -53,9 +55,9 @@ def get_performance_plots(
     cm_display = ConfusionMatrixDisplay.from_predictions(y_true, y_pred)
 
     return {
-        f"{prefix}_roc_curve": roc_display.figure_,
-        f"{prefix}_precision_recall_curve": pr_display.figure_,
-        f"{prefix}_confusion_matrix": cm_display.figure_,
+        f"{prefix}_roc_curve.png": roc_display.figure_,
+        f"{prefix}_precision_recall_curve.png": pr_display.figure_,
+        f"{prefix}_confusion_matrix.png": cm_display.figure_,
     }
 
 
@@ -65,6 +67,8 @@ def create_experiment(experiment_name: str) -> str:
     :param experiment_name: Name of the experiment
     :return: Experiment ID
     """
+    artifact_path = get_project_root() / "mlruns"
+    mlflow.set_tracking_uri(artifact_path.as_uri())
 
     try:
         experiment_id = mlflow.create_experiment(experiment_name)
@@ -77,3 +81,27 @@ def create_experiment(experiment_name: str) -> str:
         mlflow.set_experiment(experiment_name)
 
     return experiment_id
+
+
+def get_latest_run_id(experiment_name: str) -> str:
+    """
+    Get the latest run ID for the given experiment
+    :param experiment_name: Name of the experiment
+    :return: Run ID
+    """
+    artifact_path = get_project_root() / "mlruns"
+    mlflow.set_tracking_uri(artifact_path.as_uri())
+
+    experiment = mlflow.get_experiment_by_name(experiment_name)
+    if experiment is None:
+        raise ValueError("No experiment found with the given name.")
+    try:
+        run = mlflow.search_runs(
+            experiment_ids=experiment.experiment_id,
+            order_by=["start_time desc"],
+        ).iloc[0]
+    except IndexError as e:
+        print(e)
+        return None
+
+    return run.run_id
