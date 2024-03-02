@@ -48,6 +48,7 @@ def train_model() -> None:
     """
     config = read_config("configs")
     experiment_name = config["experiment_name"]
+    artifact_name = config["model_artifact"]
     info = get_data_info()
     target = info[info["role"] == "Target"]["name"].values[0]
     x_train, x_test, y_train, y_test = get_train_test_sets(target=target)
@@ -56,7 +57,7 @@ def train_model() -> None:
     print(f"Experiment ID: {experiment_id}")
     with mlflow.start_run():
         trained_dag = train(x_train, y_train)
-        mlflow.sklearn.log_model(trained_dag, "model")
+        mlflow.sklearn.log_model(trained_dag, artifact_name)
         predictions = trained_dag.predict({"input": x_test})
         metrics = get_classification_metrics(
             y_test, predictions["model"], "test"
