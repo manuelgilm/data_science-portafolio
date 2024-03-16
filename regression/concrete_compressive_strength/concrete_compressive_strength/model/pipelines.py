@@ -1,12 +1,12 @@
 from typing import List
 
-from sklearn.ensemble import RandomForestRegressor 
-
-from sklearn.pipeline import Pipeline
 from sklearn.compose import ColumnTransformer
+from sklearn.ensemble import RandomForestRegressor
 from sklearn.impute import SimpleImputer
+from sklearn.pipeline import Pipeline
 
-def get_pipeline(numerical_columns:List[str])->Pipeline:
+
+def get_pipeline(numerical_columns: List[str]) -> Pipeline:
     """
     Get the pipeline for the model.
 
@@ -14,13 +14,18 @@ def get_pipeline(numerical_columns:List[str])->Pipeline:
     :return: sklearn pipeline
     """
 
-    transformers = ColumnTransformer([
-        ('numerical_processor', SimpleImputer(strategy='median'), numerical_columns)
-    ])
+    transformers = ColumnTransformer(
+        [
+            (
+                "numerical_processor",
+                SimpleImputer(strategy="median"),
+                numerical_columns,
+            )
+        ]
+    )
 
-    pipeline = Pipeline([
-        ('preprocessor', transformers),
-        ('model', RandomForestRegressor())
-    ])
+    pipeline = Pipeline(
+        [("preprocessor", transformers), ("model", RandomForestRegressor())]
+    )
 
     return pipeline
