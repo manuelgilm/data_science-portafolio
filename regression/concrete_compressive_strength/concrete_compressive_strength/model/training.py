@@ -1,10 +1,16 @@
+import mlflow
 from concrete_compressive_strength.data.retrieval import get_dataset
 from concrete_compressive_strength.data.retrieval import process_column_names
+
+# fmt: off
+from concrete_compressive_strength.model.evaluation import get_predicted_vs_true_plot  # noqa
+from concrete_compressive_strength.model.evaluation import get_regression_metrics  # noqa
+from concrete_compressive_strength.model.mlflow_utils import create_experiment
+from concrete_compressive_strength.model.mlflow_utils import log_figures
 from concrete_compressive_strength.model.pipelines import get_pipeline
-from sklearn.metrics import mean_absolute_error
-from sklearn.metrics import mean_squared_error
-from sklearn.metrics import r2_score
 from sklearn.model_selection import train_test_split
+
+# fmt: on
 
 
 def train():
@@ -31,18 +37,29 @@ def train():
     X_train, X_test, y_train, y_test = train_test_split(
         df.drop(target, axis=1), df[target], test_size=0.2, random_state=0
     )
+    experiment_id = create_experiment("concrete_compressive_strength")
+    print(experiment_id)
+    with mlflow.start_run(run_name="concrete_compressive_strength"):
+        # fit the model
+        pipeline.fit(X_train, y_train)
 
-    # fit the model
-    pipeline.fit(X_train, y_train)
+        # make predictions
+        y_pred = pipeline.predict(X_test)
 
-    # make predictions
-    y_pred = pipeline.predict(X_test)
+        # evaluate the model
+        regression_metrics = get_regression_metrics(y_test, y_pred, "test")
+        print(regression_metrics)
 
-    # evaluate the model
-    r2 = r2_score(y_test, y_pred)
-    mae = mean_absolute_error(y_test, y_pred)
-    mse = mean_squared_error(y_test, y_pred)
+        # get predicted vs true plot
+        figures = get_predicted_vs_true_plot(y_pred, y_test, "test")
 
-    print(f"R2: {r2}")
-    print(f"MAE: {mae}")
-    print(f"MSE: {mse}")
+        # log figures
+        log_figures(figures)
+        # log the model
+        mlflow.sklearn.log_model(pipeline, "model")
+
+        # log the metrics
+        mlflow.log_metrics(regression_metrics)
+
+        # end the run
+        mlflow.end_run()
