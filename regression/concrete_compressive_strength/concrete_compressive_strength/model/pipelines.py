@@ -1,16 +1,19 @@
 from typing import List
 
+from sklearn.base import BaseEstimator
 from sklearn.compose import ColumnTransformer
-from sklearn.ensemble import RandomForestRegressor
 from sklearn.impute import SimpleImputer
 from sklearn.pipeline import Pipeline
 
 
-def get_pipeline(numerical_columns: List[str]) -> Pipeline:
+def get_pipeline(
+    numerical_columns: List[str], regressor: BaseEstimator
+) -> Pipeline:
     """
     Get the pipeline for the model.
 
     :param numerical_columns: List of numerical columns
+    :param regressor: Regressor
     :return: sklearn pipeline
     """
 
@@ -24,8 +27,6 @@ def get_pipeline(numerical_columns: List[str]) -> Pipeline:
         ]
     )
 
-    pipeline = Pipeline(
-        [("preprocessor", transformers), ("model", RandomForestRegressor())]
-    )
+    pipeline = Pipeline([("preprocessor", transformers), ("model", regressor)])
 
     return pipeline

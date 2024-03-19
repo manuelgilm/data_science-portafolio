@@ -15,6 +15,7 @@ scikit-learn = "^1.4.1.post1"
 matplotlib = "^3.8.3"
 seaborn = "^0.13.2"
 mlflow = "^2.11.1"
+shap = "^0.45.0"
 
 [tool.poetry.scripts]
 train = "concrete_compressive_strength.model.training:train"
