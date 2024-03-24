@@ -1,9 +1,12 @@
 from typing import List
 from typing import Optional
 
+from mlflow.data.pandas_dataset import PandasDataset
 import mlflow
 from concrete_compressive_strength.model.mlflow_utils import create_experiment
 from concrete_compressive_strength.model.pipelines import get_pipeline
+
+import pandas as pd
 
 
 class Regressor:
@@ -104,3 +107,35 @@ class Regressor:
         """
 
         return self.regressor().__class__.__name__
+
+class CustomPandasDataset(mlflow.pyfunc.PythonModel):
+    def __init__(self, df:pd.DataFrame, source:str, targets:str,name:str):
+        """
+        Initialize the CustomPandasDataset class.
+        """
+        self.dataset = mlflow.data.from_pandas(df, source=source, targets=targets, name=name)
+
+    def predict(self, context, model_input):
+        """
+        Predict on the model input.
+        """
+        return model_input
+    
+    def log_dataset(self, run_id:str):
+        """
+        log the dataset.
+
+        :param run_id: Run ID
+        :param experiment_id: Experiment ID
+
+        """
+
+        with mlflow.start_run(run_id=run_id):
+            mlflow.pyfunc.log_model(artifact_path=self.dataset.name, python_model=self)
+
+
+    def get_dataset(self):
+        """
+        Get the dataset.
+        """
+        return self.dataset.df
