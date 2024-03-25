@@ -1,10 +1,8 @@
 import pandas as pd
 from concrete_compressive_strength.data.retrieval import get_dataset
 from concrete_compressive_strength.data.retrieval import process_column_names
-from concrete_compressive_strength.model.base import Regressor
 from concrete_compressive_strength.model.base import CustomPandasDataset
-
-
+from concrete_compressive_strength.model.base import Regressor
 from sklearn.ensemble import AdaBoostRegressor
 from sklearn.ensemble import BaggingRegressor
 from sklearn.ensemble import ExtraTreesRegressor
@@ -34,8 +32,8 @@ def train():
     # split the data into train and test
     X_train, X_test, y_train, y_test = train_test_split(
         df.drop(target, axis=1), df[target], test_size=0.2, random_state=0
-    )    
-    
+    )
+
     eval_data = pd.DataFrame(X_test)
     eval_data[target] = y_test
 
@@ -50,11 +48,12 @@ def train():
     run_id = baseline_regressor.run_id
 
     dataset_name = "training_dataset"
-    training_dataset_df = X_train.copy()	
+    training_dataset_df = X_train.copy()
     training_dataset_df[target] = y_train
-    training_dataset = CustomPandasDataset(df = training_dataset_df, source = None, targets = target, name=dataset_name)
+    training_dataset = CustomPandasDataset(
+        df=training_dataset_df, source=None, targets=target, name=dataset_name
+    )
     training_dataset.log_dataset(run_id=run_id)
-
 
     # Training other regressors
     regressors = [
