@@ -71,4 +71,35 @@ def get_train_test_data(
         df[feature_names], df[target], test_size=test_size, random_state=42
     )
 
+    # remove outliers for training data
+    x_train[target] = y_train
+    x_train = remove_outliers(x_train)
+    x_train[target] = x_train[target]
+    x_train.drop(columns=[target], inplace=True)
+
+    # remove outliers for test data
+    x_test[target] = y_test
+    x_test = remove_outliers(x_test)
+    y_test = x_test[target]
+    x_test.drop(columns=[target], inplace=True)
+
     return x_train, x_test, y_train, y_test, metadata
+
+
+def remove_outliers(data: pd.DataFrame) -> pd.DataFrame:
+    """
+    Remove outliers.
+
+    :param data: Input data
+    :return: Preprocessed data
+    """
+    q1 = data.cnt.quantile(0.25)
+    q3 = data.cnt.quantile(0.75)
+    iqr = q3 - q1
+    lower_bound = q1 - (1.5 * iqr)
+    upper_bound = q3 + (1.5 * iqr)
+    data_preprocessed = data.loc[
+        (data.cnt >= lower_bound) & (data.cnt <= upper_bound)
+    ]
+
+    return data_preprocessed
