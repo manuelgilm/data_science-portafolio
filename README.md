@@ -1,50 +1,24 @@
+<h1 align="center">Hi 👋, I'm Manuel</h1>
+<h3 align="center">Software Engineering and Machine Learning.</h3>
 
-# Portfolio
+<p align="left"> <img src="https://komarev.com/ghpvc/?username=manuelgilm&label=Profile%20views&color=0e75b6&style=flat" alt="manuelgilm" /> </p>
 
-Data science repository where I showcase Machine Learning and data scientist projects overall. These projects are done for learning purposes or for personal interests
+<p align="left"> <a href="https://github.com/ryo-ma/github-profile-trophy"><img src="https://github-profile-trophy.vercel.app/?username=manuelgilm" alt="manuelgilm" /></a> </p>
 
-# Contents
-## Python
-<ul>
-<li>Machine Learning</li>
-	<ul>
-		<li><a href="https://github.com/manuelgilm/data_science-portafolio/blob/master/machine_learning/energy_efficiency_regression/energy_efficiency_multi_target_regression_problem.ipynb">Energy Efficiency as a multi target regression problem with Tensorflow.</a>  You can find a more detailed explanation in this <a href="https://manuel-gilm.medium.com/multi-target-regression-with-tensorflow-a7d974cf5d89">post</a>
-		</li>
-		<li><a href ="https://github.com/manuelgilm/data_science-portafolio/blob/master/machine_learning/house_price_estimation_with_multiple_data_input_types/house_price_estimation_with_multiple_inputs-part1.ipynb"> House price estimation</a> with multiple data input types.
-		</li>
-		<li>
-			<a href = "https://github.com/manuelgilm/data_science-portafolio/tree/master/machine_learning/using_callbacks_tensorflow">Using Callbacks with TensorFlow</a>: You can find a more detailed explanation in this <a href = "https://python.plainenglish.io/how-to-use-callbacks-with-tensorflow-and-keras-d0ecfc3961af">post</a>.
-		</li>
-		<li>
-			<a href = "https://python.plainenglish.io/how-to-use-python-and-fastapi-to-deploy-machine-learning-models-on-heroku-61b96271d5b3">Simple Machine Learning API</a>
-		</li>	
-	</ul>
+### Blogs posts
+<!-- BLOG-POST-LIST:START -->
+<!-- BLOG-POST-LIST:END -->
 
+<h3 align="left">Connect with me:</h3>
+<p align="left">
+<a href="https://medium.com/@manuel-gilm" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/medium.svg" alt="@manuel-gilm" height="30" width="40" /></a>
+</p>
 
-<li>Natural Language Processing</li>
-	
-<ul>
-	<li>
-		<a href = "https://github.com/manuelgilm/data_science-portafolio/tree/master/nlp/moviereview_classification">Moview Review Classification</a>: In this notebook I show how to use scikit-learn to classify movie reviews. You can see a more elaborate explanation in this <a href = "https://manuel-gilm.medium.com/movie-review-text-classification-using-scikit-learn-d72cd375a7d7">post</a>.
-	</li>
-	<li>
-		<a href="https://github.com/manuelgilm/data_science-portafolio/tree/master/nlp/moviereview_classification_with_ml">Using Word Embeddings with TensorFlow</a> for sentiment Analysis. To see a more elaborate explanation of this project you can check this <a href = "https://manuel-gilm.medium.com/using-word-embeddings-with-tensorflow-for-movie-review-text-classification-6c943d14cca2">post on medium.</a>
-	</li>
-	<li>
-		<a href = "https://github.com/manuelgilm/data_science-portafolio/tree/master/nlp/spam_detection">
-			SPAM Detection.
-		</a> This notebook shows how to implement a basic text classifier using scikit learn.
-	</li>
-	<li>
-		<a href="https://github.com/manuelgilm/data_science-portafolio/tree/master/nlp/coronavirus_tweets">Tweet Classification Using Transfer Learning and Word Embedding</a>. A more elaborate explanation of this notebook can be found in the <a href="https://manuel-gilm.medium.com/using-transfer-learning-with-word-embeddings-for-text-classification-tasks-d16386251672">next post</a>.
-	</li>
-</ul>
+<h3 align="left">Languages and Tools:</h3>
+<p align="left"> <a href="https://azure.microsoft.com/en-in/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/microsoft_azure/microsoft_azure-icon.svg" alt="azure" width="40" height="40"/> </a> <a href="https://www.docker.com/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/docker/docker-original-wordmark.svg" alt="docker" width="40" height="40"/> </a> <a href="https://cloud.google.com" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/google_cloud/google_cloud-icon.svg" alt="gcp" width="40" height="40"/> </a> <a href="https://git-scm.com/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg" alt="git" width="40" height="40"/> </a> <a href="https://grafana.com" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/grafana/grafana-icon.svg" alt="grafana" width="40" height="40"/> </a> <a href="https://kubernetes.io" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/kubernetes/kubernetes-icon.svg" alt="kubernetes" width="40" height="40"/> </a> <a href="https://pandas.pydata.org/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/2ae2a900d2f041da66e950e4d48052658d850630/icons/pandas/pandas-original.svg" alt="pandas" width="40" height="40"/> </a> <a href="https://www.python.org" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" alt="python" width="40" height="40"/> </a> <a href="https://pytorch.org/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/pytorch/pytorch-icon.svg" alt="pytorch" width="40" height="40"/> </a> <a href="https://scikit-learn.org/" target="_blank" rel="noreferrer"> <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Scikit_learn_logo_small.svg" alt="scikit_learn" width="40" height="40"/> </a> <a href="https://seaborn.pydata.org/" target="_blank" rel="noreferrer"> <img src="https://seaborn.pydata.org/_images/logo-mark-lightbg.svg" alt="seaborn" width="40" height="40"/> </a> </p>
 
-<li>Dashboards and visualizations</li>
-<ul>
-	<li><a href="https://github.com/manuelgilm/data_science-portafolio/tree/master/dashboards/simple_covid_dashboard"> Covid 2019 disease dashboard</a> This dashboard was done with dash and plotly libraries from Python</li>
-	<li><a href="https://github.com/manuelgilm/data_science-portafolio/blob/master/data_visual_covid.ipynb">Visualizations from covid dataset with plotly</a> 
-	</li>
-</ul>
-</li>
-</ul>
+<p><img align="left" src="https://github-readme-stats.vercel.app/api/top-langs?username=manuelgilm&show_icons=true&locale=en&layout=compact" alt="manuelgilm" /></p>
+
+<p>&nbsp;<img align="center" src="https://github-readme-stats.vercel.app/api?username=manuelgilm&show_icons=true&locale=en" alt="manuelgilm" /></p>
+
+<p><img align="center" src="https://github-readme-streak-stats.herokuapp.com/?user=manuelgilm&" alt="manuelgilm" /></p>
