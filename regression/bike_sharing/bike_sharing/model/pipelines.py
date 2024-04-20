@@ -1,5 +1,6 @@
 from typing import List
 
+import pandas as pd
 from sklearn.compose import ColumnTransformer
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.impute import SimpleImputer
@@ -32,3 +33,22 @@ def get_pipeline(
     model = RandomForestRegressor()
     pipeline = Pipeline([("preprocessor", transformer), ("model", model)])
     return pipeline
+
+
+def remove_outliers(data: pd.DataFrame) -> pd.DataFrame:
+    """
+    Remove outliers.
+
+    :param data: Input data
+    :return: Preprocessed data
+    """
+    q1 = data.cnt.quantile(0.25)
+    q3 = data.cnt.quantile(0.75)
+    iqr = q3 - q1
+    lower_bound = q1 - (1.5 * iqr)
+    upper_bound = q3 + (1.5 * iqr)
+    data_preprocessed = data.loc[
+        (data.cnt >= lower_bound) & (data.cnt <= upper_bound)
+    ]
+
+    return data_preprocessed

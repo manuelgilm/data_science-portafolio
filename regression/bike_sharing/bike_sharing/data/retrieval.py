@@ -2,6 +2,7 @@ from typing import Dict
 from typing import Tuple
 
 import pandas as pd
+from bike_sharing.model.pipelines import remove_outliers
 from sklearn.model_selection import train_test_split
 from ucimlrepo import fetch_ucirepo
 
@@ -70,5 +71,15 @@ def get_train_test_data(
     x_train, x_test, y_train, y_test = train_test_split(
         df[feature_names], df[target], test_size=test_size, random_state=42
     )
+
+    # remove outliers for training data
+    x_train[target] = y_train
+    x_train = remove_outliers(x_train)
+    x_train.drop(columns=[target], inplace=True)
+
+    # remove outliers for test data
+    x_test[target] = y_test
+    x_test = remove_outliers(x_test)
+    x_test.drop(columns=[target], inplace=True)
 
     return x_train, x_test, y_train, y_test, metadata
