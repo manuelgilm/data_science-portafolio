@@ -83,14 +83,17 @@ def optimize():
     Optimize the model.
     """
     configs = read_config("training")
+    artifact_path = configs["mlflow"]["artifact_path"]
+    registered_model_name = configs["mlflow"]["registered_model_name"]
+    alias = configs["mlflow"]["aliases"]["production"]
+    experiment_name = configs["mlflow"]["experiment_name"]
+    tags = configs["mlflow"]["tags"]
+    run_name = configs["mlflow"]["run_name"]
+
     x_train, x_test, y_train, y_test, metadata = get_train_test_data()
 
     categorical_features = metadata["features"]["categorical_features"]
     numerical_features = metadata["features"]["numerical_features"]
-
-    experiment_name = configs["mlflow"]["experiment_name"]
-    tags = configs["mlflow"]["tags"]
-    run_name = configs["mlflow"]["run_name"]
 
     experiment = get_or_create_experiment(
         experiment_name=experiment_name, tags=tags
@@ -101,7 +104,7 @@ def optimize():
 
     with mlflow.start_run(
         run_name=run_name, experiment_id=experiment.experiment_id
-    ):
+    ) as run:
         best = fmin(
             fn=partial(
                 objective_function,
@@ -115,7 +118,7 @@ def optimize():
             ),
             space=search_space,
             algo=tpe.suggest,
-            max_evals=100,
+            max_evals=10,
             trials=trials,
         )
         # cast all params to int
@@ -130,7 +133,7 @@ def optimize():
 
         pipeline.fit(x_train, y_train)
         metrics = get_regression_metrics(y_test, pipeline.predict(x_test))
-        artifact_path = configs["mlflow"]["artifact_path"]
+
         mlflow.sklearn.log_model(pipeline, artifact_path)
         mlflow.log_metrics(metrics)
 
@@ -139,3 +142,15 @@ def optimize():
             y_pred=pipeline.predict(x_test), y_true=y_test, prefix="test"
         )
         mlflow.log_figure(figure=fig, artifact_file=title)
+
+        model_version = mlflow.register_model(
+            f"runs:/{run.info.run_id}/{artifact_path}",
+            registered_model_name,
+        )
+
+        client = mlflow.MlflowClient()
+        client.set_registered_model_alias(
+            name=registered_model_name,
+            alias=alias,
+            version=model_version.version,
+        )

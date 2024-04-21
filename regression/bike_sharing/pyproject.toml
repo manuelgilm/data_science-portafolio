@@ -21,6 +21,7 @@ hyperopt = "^0.2.7"
 [tool.poetry.scripts]
 train = 'bike_sharing.model.train:train_model'
 optimize = 'bike_sharing.model.train:optimize'
+predict = 'bike_sharing.model.inference:get_predictions'
 
 [build-system]
 requires = ["poetry-core"]

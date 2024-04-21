@@ -4,6 +4,7 @@ from typing import Optional
 import mlflow
 import pandas as pd
 from bike_sharing.utils.utils import get_project_root
+from bike_sharing.utils.utils import read_config
 from mlflow.entities.experiment import Experiment
 
 
@@ -75,3 +76,33 @@ def evaluate_regressor(
             )
 
     return result
+
+
+def get_model_uri(stage: Optional[str] = "production"):
+    """
+    Get the model from the MLflow registry.
+
+    :param stage: The stage of the model.
+    :return: The model.
+    """
+    config = read_config("training")
+    name = config["mlflow"]["registered_model_name"]
+    alias = config["mlflow"]["aliases"][stage]
+    model_uri = f"models:/{name}@{alias}"
+    return model_uri
+
+
+def get_model(stage: Optional[str] = "production"):
+    """
+    Get the model from the MLflow registry.
+
+    :param stage: The stage of the model.
+    :return: The model.
+    """
+    model_uri = get_model_uri(stage)
+    try:
+        model = mlflow.sklearn.load_model(model_uri)
+    except mlflow.exceptions.MlflowException as e:
+        raise e
+
+    return model
