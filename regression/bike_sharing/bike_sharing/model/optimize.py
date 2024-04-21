@@ -1,6 +1,11 @@
+from typing import Dict
+from typing import Optional
+
 import mlflow
 from bike_sharing.model.evaluation import get_regression_metrics
 from bike_sharing.model.pipelines import get_pipeline
+from bike_sharing.utils.utils import read_config
+from hyperopt import hp
 
 
 def objective_function(
@@ -42,3 +47,30 @@ def objective_function(
         mlflow.log_metrics(regression_metrics)
 
     return -regression_metrics["r2_score"]
+
+
+def get_search_space(
+    estimator_label: Optional[str] = "model",
+) -> Dict[str, hp.uniformint]:
+    """
+    Get the search space for hyperparameter optimization.
+
+    :param estimator_label: Estimator label
+    :return: Search space
+    """
+
+    search_space = read_config("search_space")
+    int_parameters = [
+        parameter for parameter in search_space if parameter["type"] == "int"
+    ]
+
+    int_space = {
+        f"{estimator_label}__{parameter['name']}": hp.uniformint(
+            label=f"{estimator_label}__{parameter['name']}",
+            low=parameter["low"],
+            high=parameter["high"],
+        )
+        for parameter in int_parameters
+    }
+
+    return int_space

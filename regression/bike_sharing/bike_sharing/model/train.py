@@ -6,11 +6,12 @@ from bike_sharing.model.evaluation import get_predicted_vs_true_plot
 from bike_sharing.model.evaluation import get_regression_metrics
 from bike_sharing.model.mlflow_utils import evaluate_regressor
 from bike_sharing.model.mlflow_utils import get_or_create_experiment
+from bike_sharing.model.optimize import get_search_space
 from bike_sharing.model.optimize import objective_function
 from bike_sharing.model.pipelines import get_pipeline
+from bike_sharing.utils.utils import read_config
 from hyperopt import Trials
 from hyperopt import fmin
-from hyperopt import hp
 from hyperopt import tpe
 from mlflow.models.signature import infer_signature
 
@@ -19,6 +20,8 @@ def train_model():
     """
     Train the model.
     """
+    configs = read_config("training")
+
     # Get the dataset
     x_train, x_test, y_train, y_test, metadata = get_train_test_data()
 
@@ -31,12 +34,10 @@ def train_model():
         categorical_features=metadata["features"]["categorical_features"],
     )
 
-    experiment_name = "bike_sharing_experiment"
-    tags = {
-        "project_name": "bike_sharing",
-        "model": "random_forest_regressor",
-        "task": "regression",
-    }
+    experiment_name = configs["mlflow"]["experiment_name"]
+    tags = configs["mlflow"]["tags"]
+    artifact_path = configs["mlflow"]["artifact_path"]
+
     experiment = get_or_create_experiment(
         experiment_name=experiment_name, tags=tags
     )
@@ -46,7 +47,6 @@ def train_model():
     model_signature = infer_signature(
         model_input=input_example, model_output=y_train
     )
-    artifact_path = "RandomForestRegressor"
 
     with mlflow.start_run(
         run_name="train_model", experiment_id=experiment.experiment_id
@@ -82,42 +82,25 @@ def optimize():
     """
     Optimize the model.
     """
+    configs = read_config("training")
     x_train, x_test, y_train, y_test, metadata = get_train_test_data()
 
     categorical_features = metadata["features"]["categorical_features"]
     numerical_features = metadata["features"]["numerical_features"]
 
-    experiment_name = "bike_sharing_optimization"
-
-    tags = {
-        "project_name": "bike_sharing",
-        "model": "random_forest_regressor",
-        "task": "regression",
-    }
+    experiment_name = configs["mlflow"]["experiment_name"]
+    tags = configs["mlflow"]["tags"]
+    run_name = configs["mlflow"]["run_name"]
 
     experiment = get_or_create_experiment(
         experiment_name=experiment_name, tags=tags
     )
-
-    search_space = {
-        "model__n_estimators": hp.uniformint(
-            label="model__n_estimators", low=50, high=200
-        ),
-        "model__max_depth": hp.uniformint(
-            label="model__max_depth", low=2, high=20
-        ),
-        "model__min_samples_split": hp.uniformint(
-            label="model__min_samples_split", low=2, high=20
-        ),
-        "model__min_samples_leaf": hp.uniformint(
-            label="model__min_samples_leaf", low=1, high=20
-        ),
-    }
+    search_space = get_search_space()
 
     trials = Trials()
 
     with mlflow.start_run(
-        run_name="optimizing", experiment_id=experiment.experiment_id
+        run_name=run_name, experiment_id=experiment.experiment_id
     ):
         best = fmin(
             fn=partial(
@@ -147,8 +130,8 @@ def optimize():
 
         pipeline.fit(x_train, y_train)
         metrics = get_regression_metrics(y_test, pipeline.predict(x_test))
-
-        mlflow.sklearn.log_model(pipeline, "optimized_model")
+        artifact_path = configs["mlflow"]["artifact_path"]
+        mlflow.sklearn.log_model(pipeline, artifact_path)
         mlflow.log_metrics(metrics)
 
         # log the predicted vs true plot

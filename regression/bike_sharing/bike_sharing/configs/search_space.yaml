@@ -1,0 +1,18 @@
+parameters:
+  - name: n_estimators
+    type: int
+    low: 50
+    high: 200
+  - name: max_depth
+    type: int
+    low: 2
+    high: 20
+  - name: min_samples_split
+    type: int
+    low: 2
+    high: 20
+  - name: min_samples_leaf
+    type: int
+    low: 1
+    high: 20
+    
