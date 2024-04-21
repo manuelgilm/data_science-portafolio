@@ -74,7 +74,7 @@ def get_train_test_data(
     # remove outliers for training data
     x_train[target] = y_train
     x_train = remove_outliers(x_train)
-    x_train[target] = x_train[target]
+    y_train = x_train[target]
     x_train.drop(columns=[target], inplace=True)
 
     # remove outliers for test data
@@ -82,6 +82,13 @@ def get_train_test_data(
     x_test = remove_outliers(x_test)
     y_test = x_test[target]
     x_test.drop(columns=[target], inplace=True)
+
+    x_train[metadata["features"]["categorical_features"]] = x_train[
+        metadata["features"]["categorical_features"]
+    ].astype("int")
+    x_test[metadata["features"]["categorical_features"]] = x_test[
+        metadata["features"]["categorical_features"]
+    ].astype("int")
 
     return x_train, x_test, y_train, y_test, metadata
 
@@ -93,6 +100,7 @@ def remove_outliers(data: pd.DataFrame) -> pd.DataFrame:
     :param data: Input data
     :return: Preprocessed data
     """
+    data = data.copy()
     q1 = data.cnt.quantile(0.25)
     q3 = data.cnt.quantile(0.75)
     iqr = q3 - q1

@@ -13,6 +13,7 @@ def train_model():
     """
     # Get the dataset
     x_train, x_test, y_train, y_test, metadata = get_train_test_data()
+
     eval_data = x_test.copy()
     eval_data[metadata["target"]] = y_test
 
