@@ -45,7 +45,13 @@ poetry install
 poetry run optimize
 ```
 
-# Inference ?? 
+# Inference 
+
+To use the latest trained model run:
+
+```bash
+poetry run predict
+```
 
 
 ## Contributing
