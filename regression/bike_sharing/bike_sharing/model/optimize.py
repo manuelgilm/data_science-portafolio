@@ -60,8 +60,9 @@ def get_search_space(
     """
 
     search_space = read_config("search_space")
+    parameters = search_space["parameters"]
     int_parameters = [
-        parameter for parameter in search_space if parameter["type"] == "int"
+        parameter for parameter in parameters if parameter["type"] == "int"
     ]
 
     int_space = {

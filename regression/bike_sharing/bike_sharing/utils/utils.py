@@ -4,6 +4,8 @@ from typing import Any
 from typing import Dict
 from typing import Optional
 
+import yaml
+
 
 def get_project_root() -> Path:
     """
@@ -25,7 +27,8 @@ def read_config(
     """
     try:
         data = pkgutil.get_data(package_name, "configs/" + name + ".yaml")
+        configs = yaml.safe_load(data)
     except FileNotFoundError:
         raise FileNotFoundError(f"Configuration file {name} not found")
 
-    return data
+    return configs
