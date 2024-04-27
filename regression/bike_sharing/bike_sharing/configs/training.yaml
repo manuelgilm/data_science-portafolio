@@ -1,0 +1,15 @@
+mlflow:
+  registered_model_name: bike_sharing_regressor
+  experiment_name: bike_sharing_optimization
+  run_name: optimizing
+  artifact_path: RandomForestRegressor
+  tags:
+    project_name: bike_sharing
+    model: random_forest_regressor
+    task: regression
+
+  aliases:
+    production: champion
+    staging: candidate
+    development: experiment
+    

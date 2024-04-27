@@ -1,25 +1,26 @@
 
 # Portfolio
 
-Data science repository where I showcase Machine Learning and data scientist projects overall. These projects are done for learning purposes or for personal interests
+I'm curating an expansive data science repository where I meticulously showcase a myriad of Machine Learning and data scientist projects. From insightful explorations to sophisticated predictive models, each endeavor is meticulously crafted for both learning and personal interest. Moreover, I delve into the intricate world of MLops, exploring deployment models tailored for seamless transition to production environments. Join me on this enriching journey as we explore the nuances of data science, from inception to deployment, all aimed at honing our skills and embracing the evolving landscape of modern data-driven solutions.
+
+
 
 # Contents
-## Python
 <ul>
 <li>Machine Learning</li>
 	<ul>
-		<li><a href="https://github.com/manuelgilm/data_science-portafolio/blob/master/machine_learning/energy_efficiency_regression/energy_efficiency_multi_target_regression_problem.ipynb">Energy Efficiency as a multi target regression problem with Tensorflow.</a>  You can find a more detailed explanation in this <a href="https://manuel-gilm.medium.com/multi-target-regression-with-tensorflow-a7d974cf5d89">post</a>
+		<li><a href="https://github.com/manuelgilm/data_science-portafolio/blob/master/regression/energy_efficiency_regression/energy_efficiency_multi_target_regression_problem.ipynb">Energy Efficiency as a multi target regression problem with Tensorflow.</a>  You can find a more detailed explanation in this <a href="https://manuel-gilm.medium.com/multi-target-regression-with-tensorflow-a7d974cf5d89">post</a>
 		</li>
-		<li><a href ="https://github.com/manuelgilm/data_science-portafolio/blob/master/machine_learning/house_price_estimation_with_multiple_data_input_types/house_price_estimation_with_multiple_inputs-part1.ipynb"> House price estimation</a> with multiple data input types.
+		<li><a href ="https://github.com/manuelgilm/data_science-portafolio/blob/master/regression/house_price_estimation_with_multiple_data_input_types/house_price_estimation_with_multiple_inputs-part1.ipynb"> House price estimation</a> with multiple data input types.
 		</li>
 		<li>
-			<a href = "https://github.com/manuelgilm/data_science-portafolio/tree/master/machine_learning/using_callbacks_tensorflow">Using Callbacks with TensorFlow</a>: You can find a more detailed explanation in this <a href = "https://python.plainenglish.io/how-to-use-callbacks-with-tensorflow-and-keras-d0ecfc3961af">post</a>.
+			<a href = "https://github.com/manuelgilm/data_science-portafolio/tree/master/miscellaneous/using_callbacks_tensorflow">Using Callbacks with TensorFlow</a>: You can find a more detailed explanation in this <a href = "https://python.plainenglish.io/how-to-use-callbacks-with-tensorflow-and-keras-d0ecfc3961af">post</a>.
 		</li>
 		<li>
 			<a href = "https://python.plainenglish.io/how-to-use-python-and-fastapi-to-deploy-machine-learning-models-on-heroku-61b96271d5b3">Simple Machine Learning API</a>
 		</li>	
 		<li>
-			<a href="https://github.com/manuelgilm/data_science-portafolio/tree/master/machine_learning/airbnb_price_prediction_dbx">Airbnb Price Prediction: This project leverages PySpark, dbx, Feature Store, and MLflow to create a price predictor.</a>		
+			<a href="https://github.com/manuelgilm/data_science-portafolio/tree/master/regression/airbnb_price_prediction_dbx">Airbnb Price Prediction: This project leverages PySpark, dbx, Feature Store, and MLflow to create a price predictor.</a>		
 		</li>	
 	</ul>
 
