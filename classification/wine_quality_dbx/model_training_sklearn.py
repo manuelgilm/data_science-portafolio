@@ -1,19 +1,17 @@
 import mlflow
+import numpy as np
 from databricks.feature_store import FeatureStoreClient
-from wine_quality.data_preparation import get_configurations
+from sklearn.compose import ColumnTransformer
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.impute import SimpleImputer
-from sklearn.compose import ColumnTransformer
+from sklearn.metrics import precision_recall_curve
+from sklearn.metrics import precision_score
+from sklearn.metrics import recall_score
+from sklearn.metrics import roc_auc_score
 from sklearn.pipeline import Pipeline
-import numpy as np
-from sklearn.metrics import (
-    roc_auc_score,
-    precision_score,
-    recall_score,
-    precision_recall_curve,
-)
-
-from wine_quality.features import get_train_test_ids, get_training_testing_data
+from wine_quality.data_preparation import get_configurations
+from wine_quality.features import get_train_test_ids
+from wine_quality.features import get_training_testing_data
 from wine_quality.model_func import create_mlflow_experiment
 
 
@@ -31,7 +29,10 @@ def get_sklearn_pipeline(config: dict, feature_names: list) -> Pipeline:
     )
 
     pipeline = Pipeline(
-        steps=[("transformer", transformer), ("model", RandomForestClassifier())]
+        steps=[
+            ("transformer", transformer),
+            ("model", RandomForestClassifier()),
+        ]
     )
 
     return pipeline
@@ -57,7 +58,9 @@ if __name__ == "__main__":
     experiment_name = configs["experiment_name"]
     create_mlflow_experiment(experiment_name=experiment_name)
 
-    pipeline = get_sklearn_pipeline(config=configs, feature_names=feature_names)
+    pipeline = get_sklearn_pipeline(
+        config=configs, feature_names=feature_names
+    )
     pipeline.fit(train_pdf[feature_names], train_pdf["target"])
 
     predictions = pipeline.predict(test_pdf[feature_names])
@@ -71,7 +74,9 @@ if __name__ == "__main__":
     mlflow.log_metric("recall", recall)
 
     # logging model with mlflow
-    mlflow.sklearn.log_model(sk_model=pipeline, artifact_path="sklearn_pipeline")
+    mlflow.sklearn.log_model(
+        sk_model=pipeline, artifact_path="sklearn_pipeline"
+    )
 
     fs.log_model(
         pipeline,

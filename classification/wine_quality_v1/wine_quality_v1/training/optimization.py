@@ -1,23 +1,21 @@
-from hyperopt import hp
-from hyperopt import fmin
-from hyperopt import tpe
-from hyperopt import Trials
-
-from wine_quality_v1.training.pipelines import get_pipeline
-from wine_quality_v1.training.mlflow_utils import get_or_create_experiment
-import mlflow
-from functools import partial
 from datetime import datetime
-
-from sklearn.metrics import accuracy_score
-from sklearn.metrics import f1_score
-from sklearn.metrics import recall_score
-from sklearn.metrics import precision_score
-from sklearn.metrics import classification_report
-
-from typing import Dict
+from functools import partial
 from typing import Any
+from typing import Dict
+
+import mlflow
 import pandas as pd
+from hyperopt import Trials
+from hyperopt import fmin
+from hyperopt import hp
+from hyperopt import tpe
+from sklearn.metrics import accuracy_score
+from sklearn.metrics import classification_report
+from sklearn.metrics import f1_score
+from sklearn.metrics import precision_score
+from sklearn.metrics import recall_score
+from wine_quality_v1.training.mlflow_utils import get_or_create_experiment
+from wine_quality_v1.training.pipelines import get_pipeline
 
 
 def objective_function(
@@ -27,7 +25,7 @@ def objective_function(
     y_train: pd.DataFrame,
     y_test: pd.DataFrame,
     experiment_id: str,
-)->float:
+) -> float:
     """
     Function to minimize.
 
@@ -45,7 +43,7 @@ def objective_function(
         categorical_features=[],
     )
     # cast params to intenger using a loop
-    params_ = {key:int(value) for key, value in params.items()}
+    params_ = {key: int(value) for key, value in params.items()}
     pipeline.set_params(**params_)
 
     with mlflow.start_run(experiment_id=experiment_id, nested=True) as run:
@@ -60,7 +58,12 @@ def objective_function(
         report = classification_report(y_test, predictions, output_dict=True)
 
         mlflow.log_metrics(
-            {"accuracy": accuracy, "f1": f1, "recall": recall, "precision": precision}
+            {
+                "accuracy": accuracy,
+                "f1": f1,
+                "recall": recall,
+                "precision": precision,
+            }
         )
         return -report["weighted avg"]["f1-score"]
 
@@ -71,7 +74,7 @@ def optimize(
     x_test: pd.DataFrame,
     y_train: pd.DataFrame,
     y_test: pd.DataFrame,
-)->str:
+) -> str:
     """ """
 
     experiment_id = get_or_create_experiment(experiment_name)
@@ -81,9 +84,9 @@ def optimize(
         ),
         "classifier__max_depth": hp.quniform(
             "classifier__max_depth", low=2, high=10, q=1
-        )
+        ),
     }
-    
+
     trials = Trials()
     run_name = f"run-{str(datetime.now())}"
     with mlflow.start_run(run_name=run_name) as run:
@@ -108,7 +111,7 @@ def optimize(
             numerical_features=x_train.columns.tolist(),
             categorical_features=[],
         )
-        best_ = {key:int(value) for key, value in best.items()}
+        best_ = {key: int(value) for key, value in best.items()}
         pipeline.set_params(**best_)
         pipeline.fit(x_train, y_train)
         predictions = pipeline.predict(x_test)
@@ -117,8 +120,12 @@ def optimize(
             {
                 "best_accuracy": accuracy_score(y_test, predictions),
                 "best_f1": f1_score(y_test, predictions, average="weighted"),
-                "best_recall": recall_score(y_test, predictions, average="weighted"),
-                "best_precision": precision_score(y_test, predictions, average="weighted")
+                "best_recall": recall_score(
+                    y_test, predictions, average="weighted"
+                ),
+                "best_precision": precision_score(
+                    y_test, predictions, average="weighted"
+                ),
             }
         )
         mlflow.sklearn.log_model(pipeline, "best_model")

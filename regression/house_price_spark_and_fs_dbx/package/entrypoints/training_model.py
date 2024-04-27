@@ -1,13 +1,11 @@
 import mlflow
 from databricks.feature_store import FeatureStoreClient
-
-from package.training.preprocessing_pipeline import get_pipeline
-from package.training.train import train_model
-from package.training.retrieval import get_train_testing_sets
-from package.training.retrieval import get_train_test_ids
-
-from package.utils.utils import set_or_create_experiment
 from package.configs.utils import get_configs
+from package.training.preprocessing_pipeline import get_pipeline
+from package.training.retrieval import get_train_test_ids
+from package.training.retrieval import get_train_testing_sets
+from package.training.train import train_model
+from package.utils.utils import set_or_create_experiment
 
 if __name__ == "__main__":
     configs = get_configs()

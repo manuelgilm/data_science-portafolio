@@ -1,15 +1,16 @@
-from sklearn.datasets import load_wine 
 import pkgutil
-import yaml
-import pandas as pd 
-from typing import Tuple
-from typing import List 
-from typing import Dict
 from typing import Any
+from typing import Dict
+from typing import List
+from typing import Tuple
 
+import pandas as pd
+import yaml
+from sklearn.datasets import load_wine
 from ucimlrepo import fetch_ucirepo
 
-def get_wine_dataset_uci()->Tuple[pd.DataFrame, List[str]]:
+
+def get_wine_dataset_uci() -> Tuple[pd.DataFrame, List[str]]:
     """
     Get wine dataset from UCI.
 
@@ -19,11 +20,11 @@ def get_wine_dataset_uci()->Tuple[pd.DataFrame, List[str]]:
     df = wine_quality.data.features
     feature_names = df.columns.tolist()
     df["quality"] = wine_quality.data.targets
-    
-    return df, feature_names
-    
 
-def get_wine_dataset()->Tuple[pd.DataFrame, List[str]]:
+    return df, feature_names
+
+
+def get_wine_dataset() -> Tuple[pd.DataFrame, List[str]]:
     """
     Get wine dataset from sklearn.
 
@@ -33,11 +34,12 @@ def get_wine_dataset()->Tuple[pd.DataFrame, List[str]]:
     wine = load_wine()
     feature_names = wine.feature_names
     df = pd.DataFrame(wine.data, columns=wine.feature_names)
-    df['target'] = wine.target
+    df["target"] = wine.target
     print(read_config())
     return df, feature_names
 
-def read_config(path:str="configuration.yaml")->Dict[str, Any]:
+
+def read_config(path: str = "configuration.yaml") -> Dict[str, Any]:
     """
     Read a yaml config file.
 
@@ -47,4 +49,3 @@ def read_config(path:str="configuration.yaml")->Dict[str, Any]:
     data_bin = pkgutil.get_data("wine_quality_v1.configs", path)
     config = yaml.safe_load(data_bin)
     return config
-    

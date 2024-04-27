@@ -1,17 +1,23 @@
+import os
+from typing import Optional
+from typing import Union
+
+import pandas as pd
 import yaml
 from pyspark.sql import DataFrame
 from pyspark.sql import SparkSession
 from pyspark.sql import functions as F
-import pandas as pd 
-from typing import Optional, Union
-import os
 
-def read_yaml(filepath:str)->dict:
-    with open(filepath, 'r') as file:
+
+def read_yaml(filepath: str) -> dict:
+    with open(filepath, "r") as file:
         config = yaml.safe_load(file)
     return config
 
-def read_csv(filepath:str, spark:SparkSession)->Optional[Union[DataFrame, pd.DataFrame]]:
+
+def read_csv(
+    filepath: str, spark: SparkSession
+) -> Optional[Union[DataFrame, pd.DataFrame]]:
     """
     Retrieves a csv file from a specified filepath and returns a DataFrame.
 
@@ -26,14 +32,23 @@ def read_csv(filepath:str, spark:SparkSession)->Optional[Union[DataFrame, pd.Dat
     else:
         return pd.read_csv(filepath)
 
-def read_source_table(table_name:str, configs:dict, env:str="local", spark:SparkSession=None)->Optional[Union[DataFrame, pd.DataFrame]]:
+
+def read_source_table(
+    table_name: str,
+    configs: dict,
+    env: str = "local",
+    spark: SparkSession = None,
+) -> Optional[Union[DataFrame, pd.DataFrame]]:
     """"""
     data_base_path = configs["env"][env]["source"]
-    filepath = os.path.join(data_base_path, configs["source_tables"][table_name])
+    filepath = os.path.join(
+        data_base_path, configs["source_tables"][table_name]
+    )
     df = read_csv(filepath=filepath, spark=spark)
     return df
 
-def get_column_names(df:DataFrame)->list:
+
+def get_column_names(df: DataFrame) -> list:
     """
     Retrieves the column names of a DataFrame.
 
@@ -43,7 +58,8 @@ def get_column_names(df:DataFrame)->list:
     """
     return list(df.columns)
 
-def create_schema(df:DataFrame, spark:SparkSession)->str:
+
+def create_schema(df: DataFrame, spark: SparkSession) -> str:
     """
     Creates a schema for a DataFrame.
 
@@ -56,7 +72,10 @@ def create_schema(df:DataFrame, spark:SparkSession)->str:
     schema = sdf.schema
     return schema
 
-def create_training_and_testing_datasets(start_training:str, start_testing:str, sdf:DataFrame) -> DataFrame:
+
+def create_training_and_testing_datasets(
+    start_training: str, start_testing: str, sdf: DataFrame
+) -> DataFrame:
     """
     Splits spark dataframe into training and testing data given a time interval.
 
@@ -65,7 +84,7 @@ def create_training_and_testing_datasets(start_training:str, start_testing:str, 
     :param sdf: spark DataFrame
     :return: spark DataFrame
     """
-    
+
     training_data = sdf.filter(F.col("date") < start_testing)
     testing_data = sdf.filter(F.col("date") >= start_testing)
 

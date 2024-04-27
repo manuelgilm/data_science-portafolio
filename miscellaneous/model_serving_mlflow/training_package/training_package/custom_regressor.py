@@ -1,13 +1,11 @@
+from typing import Tuple
+
 import mlflow
 import pandas as pd
-
 from training_package.mlflow_utils import create_or_set_experiment
 from training_package.mlflow_utils import get_custom_signature
-
 from training_package.training import get_processing_pipeline
 from training_package.training import get_regression_metrics
-
-from typing import Tuple
 
 
 class MultiRegressor(mlflow.pyfunc.PythonModel):
@@ -45,7 +43,9 @@ class MultiRegressor(mlflow.pyfunc.PythonModel):
             x_train, y_train, params={"model_name": "Name of the model"}
         )
 
-        with mlflow.start_run(run_name="multi_model", experiment_id=self.experiment_id) as run:
+        with mlflow.start_run(
+            run_name="multi_model", experiment_id=self.experiment_id
+        ) as run:
             mlflow.pyfunc.log_model(
                 "multimodel", python_model=self, signature=signature
             )
@@ -66,12 +66,14 @@ class MultiRegressor(mlflow.pyfunc.PythonModel):
         """
         metrics = {}
         for x_test, y_test, i in zip(X_test, Y_test, range(len(X_test))):
-            metrics.update(get_regression_metrics(
-                self.models[f"regressor{i}"],
-                x_test,
-                y_test,
-                prefix=f"regressor{i}_test",
-            ))
+            metrics.update(
+                get_regression_metrics(
+                    self.models[f"regressor{i}"],
+                    x_test,
+                    y_test,
+                    prefix=f"regressor{i}_test",
+                )
+            )
 
         with mlflow.start_run(run_id=run_id) as run:
             mlflow.log_metrics(metrics)

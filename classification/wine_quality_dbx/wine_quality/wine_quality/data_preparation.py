@@ -1,7 +1,8 @@
+import yaml
+from databricks.feature_store import FeatureStoreClient
 from pyspark.sql import DataFrame
 from pyspark.sql import functions as F
-from databricks.feature_store import FeatureStoreClient
-import yaml
+
 
 def get_dataframe(spark, path: str) -> DataFrame:
     """
@@ -20,7 +21,9 @@ def get_configurations(filename: str) -> dict:
     params: filename: str
     return: config: dict
     """
-    with open(f"/dbfs/FileStore/configs/wine_quality/{filename}.yaml", "rb") as f:
+    with open(
+        f"/dbfs/FileStore/configs/wine_quality/{filename}.yaml", "rb"
+    ) as f:
         print(f"Reading the configuration file from dbfs: {filename}.yaml")
         config = yaml.load(f)
     return config

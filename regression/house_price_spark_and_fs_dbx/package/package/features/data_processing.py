@@ -1,9 +1,8 @@
-from sklearn.datasets import fetch_california_housing
 import pandas as pd
-
-from pyspark.sql import functions as F
-from pyspark.sql import SparkSession
 from pyspark.sql import DataFrame
+from pyspark.sql import SparkSession
+from pyspark.sql import functions as F
+from sklearn.datasets import fetch_california_housing
 
 
 def load_data() -> pd.DataFrame:

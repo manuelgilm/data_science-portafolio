@@ -1,6 +1,6 @@
 from databricks.feature_store import FeatureStoreClient
-from package.training.retrieval import get_train_test_ids
 from package.configs.utils import get_configs
+from package.training.retrieval import get_train_test_ids
 
 if __name__ == "__main__":
     configs = get_configs()

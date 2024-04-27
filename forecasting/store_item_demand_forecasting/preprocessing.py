@@ -1,20 +1,20 @@
 import os
 import sys
 
+from demand_forecasting.utils import create_schema
+from demand_forecasting.utils import create_training_and_testing_datasets
+from demand_forecasting.utils import get_column_names
+from demand_forecasting.utils import read_csv
+from demand_forecasting.utils import read_source_table
+from demand_forecasting.utils import read_yaml
 from pyspark.sql import SparkSession
 from pyspark.sql import functions as F
-from demand_forecasting.utils import (
-    read_yaml,
-    read_csv,
-    read_source_table,
-    get_column_names,
-    create_schema,
-    create_training_and_testing_datasets,
-)
 
 if __name__ == "__main__":
     print("Running entrypoint...")
-    spark = SparkSession.builder.appName("Store_item_demand_forecasting").getOrCreate()
+    spark = SparkSession.builder.appName(
+        "Store_item_demand_forecasting"
+    ).getOrCreate()
     env = "local"
     os.environ["PYSPARK_PYTHON"] = sys.executable
     os.environ["PYSPARK_DRIVER_PYTHON"] = sys.executable
@@ -34,12 +34,18 @@ if __name__ == "__main__":
     )
 
     training_dataset, testing_dataset = create_training_and_testing_datasets(
-        start_training="2014-01-01", start_testing="2017-12-31", sdf=aggregated_sales
+        start_training="2014-01-01",
+        start_testing="2017-12-31",
+        sdf=aggregated_sales,
     )
 
     # save training and testing datasets
-    training_dataset.write.format("parquet").mode("overwrite").save("data/preprocessed/training.parquet")
-    testing_dataset.write.format("parquet").mode("overwrite").save("data/preprocessed/testing.parquet")
+    training_dataset.write.format("parquet").mode("overwrite").save(
+        "data/preprocessed/training.parquet"
+    )
+    testing_dataset.write.format("parquet").mode("overwrite").save(
+        "data/preprocessed/testing.parquet"
+    )
 
     print("TRAINING DATA RANGE")
     print(training_dataset.select(F.min("date"), F.max("date")).show())
@@ -89,4 +95,3 @@ if __name__ == "__main__":
     )
     print("AVERAGE SALES PER STORE AND MONTH AND YEAR")
     print(avg_sales_per_store_month_year.show())
-    

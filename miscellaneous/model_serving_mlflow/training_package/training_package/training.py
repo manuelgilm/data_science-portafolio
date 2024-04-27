@@ -1,16 +1,16 @@
-from sklearn.datasets import make_regression
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.model_selection import train_test_split
-
-import pandas as pd
-import numpy as np
 from typing import Tuple
 
-from sklearn.pipeline import Pipeline
+import numpy as np
+import pandas as pd
 from sklearn.compose import ColumnTransformer
+from sklearn.datasets import make_regression
+from sklearn.ensemble import RandomForestRegressor
 from sklearn.impute import SimpleImputer
-
-from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error
+from sklearn.metrics import mean_absolute_error
+from sklearn.metrics import mean_squared_error
+from sklearn.metrics import r2_score
+from sklearn.model_selection import train_test_split
+from sklearn.pipeline import Pipeline
 
 
 def get_train_test_data(n_features) -> Tuple[pd.DataFrame]:
@@ -40,7 +40,13 @@ def get_processing_pipeline(numerical_features: list) -> Tuple[pd.DataFrame]:
     """
 
     column_transformer = ColumnTransformer(
-        [("numerical_imputer", SimpleImputer(strategy="median"), numerical_features)]
+        [
+            (
+                "numerical_imputer",
+                SimpleImputer(strategy="median"),
+                numerical_features,
+            )
+        ]
     )
     pipeline = Pipeline(
         [

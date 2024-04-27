@@ -30,6 +30,3 @@ def get_workspace_from_config(config_path):
     except Exception as e:
         raise e
     return ws
-
-
-

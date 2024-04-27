@@ -1,10 +1,11 @@
-from sklearn.preprocessing import OneHotEncoder
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.pipeline import Pipeline
-from sklearn.compose import ColumnTransformer
-from sklearn.impute import SimpleImputer
-import pandas as pd 
 from typing import List
+
+import pandas as pd
+from sklearn.compose import ColumnTransformer
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.impute import SimpleImputer
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import OneHotEncoder
 
 
 def get_pipeline(
@@ -25,12 +26,21 @@ def get_pipeline(
         ]
     )
     pipeline = Pipeline(
-        steps=[("preprocessor", preprocessor), ("classifier", RandomForestClassifier())]
+        steps=[
+            ("preprocessor", preprocessor),
+            ("classifier", RandomForestClassifier()),
+        ]
     )
 
     return pipeline
 
-def train(pipeline: Pipeline, x_train:pd.DataFrame, y_train:pd.DataFrame, run_name:str):
+
+def train(
+    pipeline: Pipeline,
+    x_train: pd.DataFrame,
+    y_train: pd.DataFrame,
+    run_name: str,
+):
     """
     Train a model.
 
@@ -41,4 +51,3 @@ def train(pipeline: Pipeline, x_train:pd.DataFrame, y_train:pd.DataFrame, run_na
     pipeline.fit(x_train, y_train)
 
     return pipeline
-

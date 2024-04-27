@@ -1,8 +1,10 @@
-import os 
-import pandas as pd
-import mlflow
+import os
 
-def read_source_data(config:dict, table_name:str, env:str="local"):
+import mlflow
+import pandas as pd
+
+
+def read_source_data(config: dict, table_name: str, env: str = "local"):
     """
     Read source data from the data source
     :param config: config file
@@ -14,7 +16,8 @@ def read_source_data(config:dict, table_name:str, env:str="local"):
 
     return df
 
-def set_or_create_mlflow_experiment(experiment_name:str)->str:
+
+def set_or_create_mlflow_experiment(experiment_name: str) -> str:
     """
     Set or create mlflow experiment
     :param experiment_name: experiment name

@@ -1,12 +1,10 @@
 import mlflow
-
+import pandas as pd
 from mlflow.models import ModelSignature
+from mlflow.types import ColSpec
 from mlflow.types import ParamSchema
 from mlflow.types import ParamSpec
 from mlflow.types import Schema
-from mlflow.types import ColSpec
-
-import pandas as pd
 
 
 def create_or_set_experiment(experiment_name: str) -> str:
@@ -39,10 +37,19 @@ def get_custom_signature(
     :return: signature
     """
 
-    input_schema = Schema([ColSpec(type="double",name= col) for col in x.columns])
-    output_schema = Schema([ColSpec(type="integer",name= col) for col in y.columns])
+    input_schema = Schema(
+        [ColSpec(type="double", name=col) for col in x.columns]
+    )
+    output_schema = Schema(
+        [ColSpec(type="integer", name=col) for col in y.columns]
+    )
 
-    type_map = {"str": "string", "int": "integer", "float": "float", "bool": "boolean"}
+    type_map = {
+        "str": "string",
+        "int": "integer",
+        "float": "float",
+        "bool": "boolean",
+    }
 
     params_spec = [
         ParamSpec(name=k, dtype=type_map[type(v).__name__], default=None)

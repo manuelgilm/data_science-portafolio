@@ -1,6 +1,8 @@
-from pyspark.sql.types import IntegerType
-from wine_quality.data_preparation import get_dataframe, create_feature_table, get_configurations
 from pyspark.sql import functions as F
+from pyspark.sql.types import IntegerType
+from wine_quality.data_preparation import create_feature_table
+from wine_quality.data_preparation import get_configurations
+from wine_quality.data_preparation import get_dataframe
 
 red_wine_sdf = get_dataframe(
     spark, path="dbfs:/FileStore/datasets/wine_quality/winequality-red.csv"
@@ -18,6 +20,7 @@ white_wine_sdf = white_wine_sdf.withColumn(
     "target", F.when(F.col("quality") < 6, 0).otherwise(1)
 )
 
+
 # let's use white wine dataset for training
 def clean_raw_data(sdf):
     """
@@ -31,11 +34,13 @@ def clean_raw_data(sdf):
     sdf = sdf.withColumn("id", F.monotonically_increasing_id())
     for field in sdf.schema.fields:
         if " " in field.name:
-            sdf = sdf.withColumnRenamed(field.name, field.name.replace(" ", "_"))
-        
+            sdf = sdf.withColumnRenamed(
+                field.name, field.name.replace(" ", "_")
+            )
+
         if isinstance(field.dataType, IntegerType):
             sdf = sdf.withColumn(field.name, F.col(field.name).cast("double"))
-    
+
     return sdf
 
 

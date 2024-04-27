@@ -1,6 +1,8 @@
 def create_resource_group(resource_client, resource_group_name, location):
     """Creates a resource group"""
-    resource_group_names = [rg.name for rg in resource_client.resource_groups.list()]
+    resource_group_names = [
+        rg.name for rg in resource_client.resource_groups.list()
+    ]
     if resource_group_name in resource_group_names:
         print("RESOURCE GROUP ALREADY EXIST")
     else:

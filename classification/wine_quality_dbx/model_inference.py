@@ -1,10 +1,11 @@
-import mlflow 
+import mlflow
 from databricks.feature_store import FeatureStoreClient
-
-from wine_quality.features import get_train_test_ids, get_training_testing_data
 from wine_quality.data_preparation import get_configurations
+from wine_quality.features import get_train_test_ids
+from wine_quality.features import get_training_testing_data
 
-def get_model(model_uri:str):
+
+def get_model(model_uri: str):
     """
     This function loads the model from the specified model uri.
     params: model_uri: str
@@ -12,16 +13,17 @@ def get_model(model_uri:str):
     """
     return mlflow.spark.load_model(model_uri=model_uri)
 
-if __name__=="__main__":
 
-    model_uri_fs = 'runs:/62defa3aafca470ea5294ac8bd5cfecd/fs_cv_pipeline'
-    model_uri = 'runs:/62defa3aafca470ea5294ac8bd5cfecd/cv_pipeline'
+if __name__ == "__main__":
+
+    model_uri_fs = "runs:/62defa3aafca470ea5294ac8bd5cfecd/fs_cv_pipeline"
+    model_uri = "runs:/62defa3aafca470ea5294ac8bd5cfecd/cv_pipeline"
     configs = get_configurations(filename="common_params")
     train_ids, test_ids, feature_names = get_train_test_ids(configs=configs)
 
     # Inference with feature store
     fs = FeatureStoreClient()
-    
+
     # print(test_ids.show())
     prediction = fs.score_batch(
         model_uri=model_uri_fs,
@@ -42,7 +44,8 @@ if __name__=="__main__":
     model = get_model(model_uri=model_uri)
     prediction = model.transform(test_set.load_df())
     print("INFERENCE WITH SPARK MODEL")
-    print(prediction.select("prediction","rawPrediction","probability","target").show())
-    
-    
-
+    print(
+        prediction.select(
+            "prediction", "rawPrediction", "probability", "target"
+        ).show()
+    )

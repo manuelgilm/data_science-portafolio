@@ -1,4 +1,5 @@
-import mlflow 
+import mlflow
+
 
 def get_or_create_experiment(experiment_name: str) -> str:
     """
@@ -10,7 +11,9 @@ def get_or_create_experiment(experiment_name: str) -> str:
     try:
         experiment_id = mlflow.create_experiment(experiment_name)
     except mlflow.exceptions.MlflowException:
-        experiment_id = mlflow.get_experiment_by_name(experiment_name).experiment_id
+        experiment_id = mlflow.get_experiment_by_name(
+            experiment_name
+        ).experiment_id
     finally:
         mlflow.set_experiment(experiment_name)
     return experiment_id

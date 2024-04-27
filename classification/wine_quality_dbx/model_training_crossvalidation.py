@@ -1,15 +1,16 @@
-import mlflow 
+import mlflow
 from databricks.feature_store import FeatureStoreClient
-
-from wine_quality.features import get_train_test_ids, get_training_testing_data
-from wine_quality.data_preparation import get_configurations
-from wine_quality.model_func import create_mlflow_experiment, get_pipeline
-
-from pyspark.ml.tuning import CrossValidator, ParamGridBuilder
 from pyspark.ml.evaluation import BinaryClassificationEvaluator
+from pyspark.ml.tuning import CrossValidator
+from pyspark.ml.tuning import ParamGridBuilder
 from pyspark.mllib.evaluation import MulticlassMetrics
+from wine_quality.data_preparation import get_configurations
+from wine_quality.features import get_train_test_ids
+from wine_quality.features import get_training_testing_data
+from wine_quality.model_func import create_mlflow_experiment
+from wine_quality.model_func import get_pipeline
 
-if __name__=="__main__":
+if __name__ == "__main__":
 
     fs = FeatureStoreClient()
     configs = get_configurations(filename="common_params")
@@ -27,12 +28,18 @@ if __name__=="__main__":
     create_mlflow_experiment(experiment_name=experiment_name)
 
     evaluator = BinaryClassificationEvaluator(
-        labelCol="target", rawPredictionCol="prediction", metricName="areaUnderROC"
+        labelCol="target",
+        rawPredictionCol="prediction",
+        metricName="areaUnderROC",
     )
 
     pipeline = get_pipeline(columns=feature_names)
-    params = ParamGridBuilder().addGrid(pipeline.getStages()[-1].maxDepth, [2, 5]).build()
-    
+    params = (
+        ParamGridBuilder()
+        .addGrid(pipeline.getStages()[-1].maxDepth, [2, 5])
+        .build()
+    )
+
     cv_pipeline = CrossValidator(
         estimator=pipeline,
         estimatorParamMaps=params,
@@ -41,16 +48,17 @@ if __name__=="__main__":
     )
 
     with mlflow.start_run(run_name="wine_quality_classification") as run:
-        
+
         cv_pipeline_model = cv_pipeline.fit(train_sdf)
         predictions = cv_pipeline_model.transform(test_sdf)
-        
 
         # get metrics
         roc = evaluator.evaluate(predictions)
         prc = evaluator.setMetricName("areaUnderPR").evaluate(predictions)
 
-        metrics = MulticlassMetrics(predictions.select("prediction", "target").rdd)
+        metrics = MulticlassMetrics(
+            predictions.select("prediction", "target").rdd
+        )
         precision = metrics.precision(1)
         recall = metrics.recall(1)
 
@@ -60,7 +68,9 @@ if __name__=="__main__":
         mlflow.log_metric("recall", recall)
 
         mlflow.spark.log_model(
-            cv_pipeline_model, "cv_pipeline", input_example=train_sdf.limit(5).toPandas()
+            cv_pipeline_model,
+            "cv_pipeline",
+            input_example=train_sdf.limit(5).toPandas(),
         )
         # logging model with mlflow
         fs.log_model(

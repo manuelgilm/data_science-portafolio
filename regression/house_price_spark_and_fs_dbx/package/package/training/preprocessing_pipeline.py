@@ -1,10 +1,10 @@
-from sklearn.pipeline import Pipeline
-from sklearn.compose import ColumnTransformer
-from sklearn.impute import SimpleImputer
-from sklearn.preprocessing import OneHotEncoder
-from sklearn.ensemble import RandomForestRegressor
-
 from typing import List
+
+from sklearn.compose import ColumnTransformer
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.impute import SimpleImputer
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import OneHotEncoder
 
 
 def get_pipeline(
@@ -19,7 +19,11 @@ def get_pipeline(
     """
     transformer = ColumnTransformer(
         [
-            ("numerical_imputer", SimpleImputer(strategy="median"), numerical_features),
+            (
+                "numerical_imputer",
+                SimpleImputer(strategy="median"),
+                numerical_features,
+            ),
             (
                 "one_hot_encoder",
                 OneHotEncoder(handle_unknown="ignore"),

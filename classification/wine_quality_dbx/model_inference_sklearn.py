@@ -1,12 +1,12 @@
 import mlflow
 import pandas as pd
 from databricks.feature_store import FeatureStoreClient
-
-from wine_quality.features import get_train_test_ids, get_training_testing_data
-from wine_quality.data_preparation import get_configurations
-from wine_quality.model_func import create_mlflow_experiment, get_pipeline
-
 from pyspark.sql import functions as F
+from wine_quality.data_preparation import get_configurations
+from wine_quality.features import get_train_test_ids
+from wine_quality.features import get_training_testing_data
+from wine_quality.model_func import create_mlflow_experiment
+from wine_quality.model_func import get_pipeline
 
 
 @F.pandas_udf("double")

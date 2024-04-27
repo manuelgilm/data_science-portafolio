@@ -1,8 +1,9 @@
-import os
-from dotenv import load_dotenv
-import subprocess
 import argparse
+import os
+import subprocess
 from typing import List
+
+from dotenv import load_dotenv
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
@@ -30,7 +31,11 @@ def execute_tasks(job: str, tasks: List[str]):
 
 if __name__ == "__main__":
     load_dotenv()
-    project_tasks = ["creating_feature_tables", "training_model", "inferencing_model"]
+    project_tasks = [
+        "creating_feature_tables",
+        "training_model",
+        "inferencing_model",
+    ]
 
     args = parser.parse_args()
     if args.job != "delete":

@@ -1,9 +1,11 @@
+import mlflow
 import pandas as pd
 from sklearn.pipeline import Pipeline
-import mlflow 
 
 
-def train_model(pipeline:Pipeline, run_name:str, x:pd.DataFrame, y:pd.DataFrame)->str:
+def train_model(
+    pipeline: Pipeline, run_name: str, x: pd.DataFrame, y: pd.DataFrame
+) -> str:
     """
     Train a model and log it to MLflow.
 
@@ -14,7 +16,7 @@ def train_model(pipeline:Pipeline, run_name:str, x:pd.DataFrame, y:pd.DataFrame)
     :return: Run ID.
     """
     with mlflow.start_run(run_name=run_name) as run:
-        mlflow.sklearn.autolog()    
+        mlflow.sklearn.autolog()
         pipeline.fit(x, y)
-        mlflow.sklearn.log_model(pipeline, "model")    
+        mlflow.sklearn.log_model(pipeline, "model")
     return run.info.run_id, pipeline

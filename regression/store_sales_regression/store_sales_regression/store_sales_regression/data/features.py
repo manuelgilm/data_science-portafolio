@@ -1,7 +1,11 @@
-import pandas as pd
 from typing import Tuple
 
-def create_time_based_features(df:pd.DataFrame, date_col:str)->Tuple[pd.DataFrame, list[str]]:
+import pandas as pd
+
+
+def create_time_based_features(
+    df: pd.DataFrame, date_col: str
+) -> Tuple[pd.DataFrame, list[str]]:
     """
     Creates features based on time.
 
@@ -17,11 +21,18 @@ def create_time_based_features(df:pd.DataFrame, date_col:str)->Tuple[pd.DataFram
     df["dayofweek"] = df[date_col].dt.dayofweek
     df["quarter"] = df[date_col].dt.quarter
     df["dayofyear"] = df[date_col].dt.dayofyear
-    feature_names = ["year", "month", "day", "dayofweek", "quarter", "dayofyear"]
+    feature_names = [
+        "year",
+        "month",
+        "day",
+        "dayofweek",
+        "quarter",
+        "dayofyear",
+    ]
     return df, feature_names
 
 
-def aggregate_sales_data(df:pd.DataFrame)->pd.DataFrame:
+def aggregate_sales_data(df: pd.DataFrame) -> pd.DataFrame:
     """
     Aggregates sales data.
 
@@ -31,5 +42,7 @@ def aggregate_sales_data(df:pd.DataFrame)->pd.DataFrame:
     df = df.copy()
 
     # Aggregate all sales per store
-    df_agg = df.groupby(["date","store"], as_index=False).agg({"sales": "sum"})
+    df_agg = df.groupby(["date", "store"], as_index=False).agg(
+        {"sales": "sum"}
+    )
     return df_agg

@@ -1,13 +1,21 @@
-from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
-from sklearn.tree import DecisionTreeRegressor
-from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
-from sklearn.model_selection import TimeSeriesSplit, GridSearchCV
-from sklearn.pipeline import Pipeline
-from sklearn.compose import ColumnTransformer
-from sklearn.impute import SimpleImputer
-from typing import List, Tuple, Dict, Union
-import pandas as pd
+from typing import Dict
+from typing import List
+from typing import Tuple
+from typing import Union
+
 import mlflow
+import pandas as pd
+from sklearn.compose import ColumnTransformer
+from sklearn.ensemble import GradientBoostingRegressor
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.impute import SimpleImputer
+from sklearn.metrics import mean_absolute_error
+from sklearn.metrics import mean_squared_error
+from sklearn.metrics import r2_score
+from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import TimeSeriesSplit
+from sklearn.pipeline import Pipeline
+from sklearn.tree import DecisionTreeRegressor
 
 
 def get_pipeline(
@@ -109,13 +117,9 @@ def train_model(df: pd.DataFrame, feature_names):
             mlflow.set_tags({"store": store, "item": item})
 
             # creating model paths
-            rf_artifact_uri = (
-                f"runs:/{inner_run.info.run_id}/{store}_{item}_randomforest_regressor"
-            )
+            rf_artifact_uri = f"runs:/{inner_run.info.run_id}/{store}_{item}_randomforest_regressor"
             gb_artifact_uri = f"runs:/{inner_run.info.run_id}/{store}_{item}_gradientboosting_regressor"
-            dt_artifact_uri = (
-                f"runs:/{inner_run.info.run_id}/{store}_{item}_decisiontree_regressor"
-            )
+            dt_artifact_uri = f"runs:/{inner_run.info.run_id}/{store}_{item}_decisiontree_regressor"
             columns = [
                 "store",
                 "item",

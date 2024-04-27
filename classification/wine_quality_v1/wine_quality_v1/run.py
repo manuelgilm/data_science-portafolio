@@ -1,16 +1,13 @@
-from wine_quality_v1.data_preparation.data_preparation import get_wine_dataset_uci
-from wine_quality_v1.data_preparation.data_preparation import read_config
-
-from wine_quality_v1.training.pipelines import get_pipeline
-from wine_quality_v1.training.optimization import optimize
-from wine_quality_v1.training.mlflow_utils import get_or_create_experiment
-
-
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import classification_report
+from datetime import datetime
 
 import mlflow
-from datetime import datetime
+from sklearn.metrics import classification_report
+from sklearn.model_selection import train_test_split
+from wine_quality_v1.data_preparation.data_preparation import get_wine_dataset_uci
+from wine_quality_v1.data_preparation.data_preparation import read_config
+from wine_quality_v1.training.mlflow_utils import get_or_create_experiment
+from wine_quality_v1.training.optimization import optimize
+from wine_quality_v1.training.pipelines import get_pipeline
 
 
 def main():

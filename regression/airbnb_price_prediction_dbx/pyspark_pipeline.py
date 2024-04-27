@@ -1,14 +1,15 @@
 import mlflow
 from databricks.feature_store import FeatureStoreClient
 from pyspark.ml.evaluation import RegressionEvaluator
-
 from utils import util_functions as uf
 
 if __name__ == "__main__":
     fs = FeatureStoreClient()
     config = uf.get_configurations(filename="feature_preparation")
     experiment_name = config["experiment_name"]
-    categorical_columns, numerical_columns = uf.get_feature_names(config=config)
+    categorical_columns, numerical_columns = uf.get_feature_names(
+        config=config
+    )
     categorical_features = [col + "_indexed" for col in categorical_columns]
     numerical_features = [col + "_imputed" for col in numerical_columns]
 
@@ -47,7 +48,9 @@ if __name__ == "__main__":
 
         # log the model
         mlflow.spark.log_model(
-            model_pipeline, "pipeline", input_example=train_sdf.limit(5).toPandas()
+            model_pipeline,
+            "pipeline",
+            input_example=train_sdf.limit(5).toPandas(),
         )
 
         # log model using feature store

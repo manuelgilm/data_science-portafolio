@@ -1,9 +1,9 @@
 import os
-from dotenv import load_dotenv
+
 from azure.identity import AzureCliCredential
 from azure.mgmt.resource import ResourceManagementClient
 from azure.mgmt.storage import StorageManagementClient
-
+from dotenv import load_dotenv
 from resource_management.azure_environment import create_resource_group
 
 if __name__ == "__main__":

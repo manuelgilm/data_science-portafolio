@@ -1,9 +1,11 @@
-from pyspark.sql import DataFrame
-from databricks.feature_store import FeatureStoreClient
-from databricks.feature_store import FeatureLookup
-from databricks.feature_store.training_set import TrainingSet
-from typing import Tuple
 from typing import List
+from typing import Tuple
+
+from databricks.feature_store import FeatureLookup
+from databricks.feature_store import FeatureStoreClient
+from databricks.feature_store.training_set import TrainingSet
+from pyspark.sql import DataFrame
+
 
 def get_train_testing_sets(
     database_name: str,
@@ -40,7 +42,10 @@ def get_train_testing_sets(
     )
 
     testing_set = fs.create_training_set(
-        df=test_ids, feature_lookups=[feature_lookup], label=label, exclude_columns=["id"]
+        df=test_ids,
+        feature_lookups=[feature_lookup],
+        label=label,
+        exclude_columns=["id"],
     )
 
     return training_set, testing_set

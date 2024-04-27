@@ -1,22 +1,16 @@
 import mlflow
-
-from pyspark.sql import DataFrame
-from pyspark.sql import SparkSession
-from pyspark.sql.types import StringType, DoubleType
-
+import yaml
 from databricks.feature_store import FeatureLookup
 from databricks.feature_store import FeatureStoreClient
-
 from pyspark.ml import Pipeline
 from pyspark.ml.feature import Imputer
 from pyspark.ml.feature import StringIndexer
 from pyspark.ml.feature import VectorAssembler
 from pyspark.ml.regression import DecisionTreeRegressor
-
-
-import yaml 
-
-
+from pyspark.sql import DataFrame
+from pyspark.sql import SparkSession
+from pyspark.sql.types import DoubleType
+from pyspark.sql.types import StringType
 
 
 def read_data(config: dict) -> DataFrame:
@@ -56,7 +50,9 @@ def get_imputer(numerical_columns: list) -> Imputer:
     """
     numerical_imputed = [col + "_imputed" for col in numerical_columns]
     numerical_imputer = Imputer(
-        inputCols=numerical_columns, outputCols=numerical_imputed, strategy="median"
+        inputCols=numerical_columns,
+        outputCols=numerical_imputed,
+        strategy="median",
     )
     return numerical_imputer
 
@@ -71,11 +67,16 @@ def get_string_indexer(categorical_columns: list) -> StringIndexer:
     """
     indexed_columns = [col + "_indexed" for col in categorical_columns]
     string_indexer = StringIndexer(
-        inputCols=categorical_columns, outputCols=indexed_columns, handleInvalid="skip"
+        inputCols=categorical_columns,
+        outputCols=indexed_columns,
+        handleInvalid="skip",
     )
     return string_indexer
 
-def get_pipeline(config: dict, categorical_columns: list, numerical_columns: list):
+
+def get_pipeline(
+    config: dict, categorical_columns: list, numerical_columns: list
+):
     """
     This function returns a pipeline for the given configuration and spark dataframe.
 
@@ -89,8 +90,12 @@ def get_pipeline(config: dict, categorical_columns: list, numerical_columns: lis
     label = config["label"]
 
     numerical_imputer = get_imputer(numerical_columns=numerical_columns)
-    string_indexer = get_string_indexer(categorical_columns=categorical_columns)
-    feature_names = numerical_imputer.getOutputCols() + string_indexer.getOutputCols()
+    string_indexer = get_string_indexer(
+        categorical_columns=categorical_columns
+    )
+    feature_names = (
+        numerical_imputer.getOutputCols() + string_indexer.getOutputCols()
+    )
     vector_assembler = VectorAssembler(
         inputCols=feature_names,
         outputCol="features",
@@ -126,6 +131,7 @@ def get_feature_names(config: dict) -> list:
     ]
     return categorical_columns, numerical_columns
 
+
 def set_or_create_mlflow_experiment(experiment_name: str) -> None:
     """
     This function sets or creates a new mlflow experiment.
@@ -137,7 +143,7 @@ def set_or_create_mlflow_experiment(experiment_name: str) -> None:
         mlflow.set_experiment(experiment_name)
 
 
-def get_train_test_ids(config:dict,fs:FeatureStoreClient):
+def get_train_test_ids(config: dict, fs: FeatureStoreClient):
     """
     This function returns the training and test ids for the given configuration.
     """
@@ -160,7 +166,9 @@ def get_train_test_sets(config, fs, train_ids, test_ids, feature_names):
     feature_table_name = f"{database_name}.{table_name}"
 
     feature_lookups = FeatureLookup(
-        table_name=feature_table_name, feature_names=feature_names, lookup_key="id"
+        table_name=feature_table_name,
+        feature_names=feature_names,
+        lookup_key="id",
     )
     training_set = fs.create_training_set(
         train_ids,
@@ -169,7 +177,10 @@ def get_train_test_sets(config, fs, train_ids, test_ids, feature_names):
         exclude_columns=["id"],
     )
     testing_set = fs.create_training_set(
-        test_ids, feature_lookups=[feature_lookups], label=None, exclude_columns=["id"]
+        test_ids,
+        feature_lookups=[feature_lookups],
+        label=None,
+        exclude_columns=["id"],
     )
 
     return training_set, testing_set

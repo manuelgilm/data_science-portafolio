@@ -1,14 +1,16 @@
 import os
 import sys
 
-from pyspark.sql import SparkSession
-from pyspark.sql import functions as F
 from demand_forecasting.feature_processing import create_features_from_pandas_dataframe
 from demand_forecasting.utils import create_schema
+from pyspark.sql import SparkSession
+from pyspark.sql import functions as F
 
 if __name__ == "__main__":
     print("Running entrypoint...")
-    spark = SparkSession.builder.appName("Store_item_demand_forecasting").getOrCreate()
+    spark = SparkSession.builder.appName(
+        "Store_item_demand_forecasting"
+    ).getOrCreate()
     os.environ["PYSPARK_PYTHON"] = sys.executable
     os.environ["PYSPARK_DRIVER_PYTHON"] = sys.executable
     training_data = spark.read.format("parquet").load(

@@ -1,16 +1,14 @@
-from resource_management.workspace_management import create_workspace
-from resource_management.data_management import (
-    create_blob_datastore,
-    upload_folder,
-    create_tabular_dataset,
-    create_blob_container,
-    create_storage_account,
-)
-from azure.mgmt.storage import StorageManagementClient
-from azure.identity import AzureCliCredential
-
-from dotenv import load_dotenv
 import os
+
+from azure.identity import AzureCliCredential
+from azure.mgmt.storage import StorageManagementClient
+from dotenv import load_dotenv
+from resource_management.data_management import create_blob_container
+from resource_management.data_management import create_blob_datastore
+from resource_management.data_management import create_storage_account
+from resource_management.data_management import create_tabular_dataset
+from resource_management.data_management import upload_folder
+from resource_management.workspace_management import create_workspace
 
 if __name__ == "__main__":
     load_dotenv()
@@ -41,7 +39,7 @@ if __name__ == "__main__":
         storage_client=storage_client,
         storage_account_name=storage_account_name,
         resource_group_name=resource_group,
-        container_name=container_name
+        container_name=container_name,
     )
 
     # create and get ml workspace
@@ -55,7 +53,7 @@ if __name__ == "__main__":
     keys = storage_client.storage_accounts.list_keys(
         resource_group, storage_account_name
     )
-    
+
     # create datastore
     datastore = create_blob_datastore(
         workspace=ws,
@@ -66,7 +64,9 @@ if __name__ == "__main__":
     )
 
     # upload data to storage account
-    upload_folder(datastore=datastore, source_directory="./Loan_Data", target=".")
+    upload_folder(
+        datastore=datastore, source_directory="./Loan_Data", target="."
+    )
 
     # create dataset
     create_tabular_dataset(

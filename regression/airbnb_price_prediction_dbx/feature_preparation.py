@@ -1,10 +1,11 @@
 import yaml
+from databricks.feature_store import FeatureStoreClient
 from pyspark.sql import DataFrame
 from pyspark.sql import functions as F
-from pyspark.sql.types import DoubleType, IntegerType
-
-from databricks.feature_store import FeatureStoreClient
+from pyspark.sql.types import DoubleType
+from pyspark.sql.types import IntegerType
 from utils import util_functions as uf
+
 
 def data_preparation(config: dict, sdf: DataFrame) -> DataFrame:
     """
@@ -22,7 +23,9 @@ def data_preparation(config: dict, sdf: DataFrame) -> DataFrame:
     """
     columns_to_keep = config["columns_to_keep"]
     sdf = sdf.select(columns_to_keep)
-    sdf = sdf.withColumn("price", F.translate("price", "$", "").cast(DoubleType()))
+    sdf = sdf.withColumn(
+        "price", F.translate("price", "$", "").cast(DoubleType())
+    )
 
     # Casting all the numerical columns to double type
     numerical_columns = [
@@ -41,17 +44,21 @@ def data_preparation(config: dict, sdf: DataFrame) -> DataFrame:
     return sdf
 
 
-def create_feature_table(config: dict, fs: FeatureStoreClient, sdf: DataFrame) -> None:
+def create_feature_table(
+    config: dict, fs: FeatureStoreClient, sdf: DataFrame
+) -> None:
     """Creates the feature table in delta lake format.
 
     params: config: dict
     params: fs: feature store client
     params: sdf: spark dataframe
     """
-    feature_table_name = f"{config['database_name']}.{config['feature_table_name']}"
+    feature_table_name = (
+        f"{config['database_name']}.{config['feature_table_name']}"
+    )
     fs.create_table(
         name=feature_table_name,
-        df = sdf,
+        df=sdf,
         primary_keys=["id"],
         schema=sdf.schema,
         description="Feature table for airbnb price prediction",

@@ -1,6 +1,6 @@
-from pyspark.sql import SparkSession
-from package.configs.utils import get_configs
 import mlflow
+from package.configs.utils import get_configs
+from pyspark.sql import SparkSession
 
 if __name__ == "__main__":
     configs = get_configs()
@@ -17,5 +17,7 @@ if __name__ == "__main__":
 
     experiments = [experiment_name, "/Shared/dbx/projects/package"]
     for experiment in experiments:
-        experiment_id = mlflow.get_experiment_by_name(name=experiment).experiment_id
+        experiment_id = mlflow.get_experiment_by_name(
+            name=experiment
+        ).experiment_id
         mlflow.delete_experiment(experiment_id=experiment_id)
