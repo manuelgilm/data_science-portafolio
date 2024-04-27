@@ -77,7 +77,7 @@ def optimize(
 ) -> str:
     """ """
 
-    experiment_id = get_or_create_experiment(experiment_name)
+    experiment = get_or_create_experiment(experiment_name)
     search_space = {
         "classifier__n_estimators": hp.quniform(
             "classifier__n_estimators", low=10, high=100, q=2
@@ -98,7 +98,7 @@ def optimize(
                 x_test=x_test,
                 y_train=y_train,
                 y_test=y_test,
-                experiment_id=experiment_id,
+                experiment_id=experiment.experiment_id,
             ),
             space=search_space,
             algo=tpe.suggest,
@@ -120,9 +120,7 @@ def optimize(
             {
                 "best_accuracy": accuracy_score(y_test, predictions),
                 "best_f1": f1_score(y_test, predictions, average="weighted"),
-                "best_recall": recall_score(
-                    y_test, predictions, average="weighted"
-                ),
+                "best_recall": recall_score(y_test, predictions, average="weighted"),
                 "best_precision": precision_score(
                     y_test, predictions, average="weighted"
                 ),
