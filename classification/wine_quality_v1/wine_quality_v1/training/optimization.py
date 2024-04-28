@@ -2,7 +2,7 @@ from datetime import datetime
 from functools import partial
 from typing import Any
 from typing import Dict
-
+from typing import List
 import mlflow
 import pandas as pd
 from hyperopt import Trials
@@ -16,20 +16,26 @@ from sklearn.metrics import precision_score
 from sklearn.metrics import recall_score
 from wine_quality_v1.training.mlflow_utils import get_or_create_experiment
 from wine_quality_v1.training.pipelines import get_pipeline
+from wine_quality_v1.training.pipelines import train
+from wine_quality_v1.training.evaluation import get_classification_metrics
 
 
 def objective_function(
     params: Dict[str, Any],
+    numerical_features: List[str],
+    categorical_features: List[str],
     x_train: pd.DataFrame,
-    x_test: pd.DataFrame,
+    x_val: pd.DataFrame,
     y_train: pd.DataFrame,
-    y_test: pd.DataFrame,
+    y_val: pd.DataFrame,
     experiment_id: str,
 ) -> float:
     """
     Function to minimize.
 
     :param params: parameters to optimize.
+    :param numerical_features: numerical features.
+    :param categorical_features: categorical features.
     :param x_train: features.
     :param x_test: features.
     :param y_train: target.
@@ -37,47 +43,35 @@ def objective_function(
     :param experiment_id: experiment id.
     :return: metric to minimize.
     """
-    numerical_feautures = x_train.columns.tolist()
-    pipeline = get_pipeline(
-        numerical_features=numerical_feautures,
-        categorical_features=[],
+    pipeline = train(
+        params=params,
+        numerical_features=numerical_features,
+        categorical_features=categorical_features,
+        x_train=x_train,
+        y_train=y_train,
     )
-    # cast params to intenger using a loop
-    params_ = {key: int(value) for key, value in params.items()}
-    pipeline.set_params(**params_)
 
     with mlflow.start_run(experiment_id=experiment_id, nested=True) as run:
         print("Run ID:", run.info.run_id)
-        pipeline.fit(x_train, y_train)
-        predictions = pipeline.predict(x_test)
-
-        accuracy = accuracy_score(y_test, predictions)
-        f1 = f1_score(y_test, predictions, average="weighted")
-        recall = recall_score(y_test, predictions, average="weighted")
-        precision = precision_score(y_test, predictions, average="weighted")
-        report = classification_report(y_test, predictions, output_dict=True)
-
-        mlflow.log_metrics(
-            {
-                "accuracy": accuracy,
-                "f1": f1,
-                "recall": recall,
-                "precision": precision,
-            }
+        predictions = pipeline.predict(x_val)
+        test_metrics = get_classification_metrics(
+            y_pred=predictions, y_true=y_val, prefix="val"
         )
-        return -report["weighted avg"]["f1-score"]
+        mlflow.log_metrics(metrics=test_metrics)
+        return -test_metrics["val_f1"]
 
 
 def optimize(
-    experiment_name: str,
+    experiment_id: str,
+    numerical_feautres: List[str],
+    categorical_features: List[str],
     x_train: pd.DataFrame,
-    x_test: pd.DataFrame,
+    x_val: pd.DataFrame,
     y_train: pd.DataFrame,
-    y_test: pd.DataFrame,
+    y_val: pd.DataFrame,
 ) -> str:
     """ """
 
-    experiment = get_or_create_experiment(experiment_name)
     search_space = {
         "classifier__n_estimators": hp.quniform(
             "classifier__n_estimators", low=10, high=100, q=2
@@ -91,14 +85,16 @@ def optimize(
     run_name = f"run-{str(datetime.now())}"
     with mlflow.start_run(run_name=run_name) as run:
         print("Run ID:", run.info.run_id)
-        best = fmin(
+        best_params = fmin(
             fn=partial(
                 objective_function,
+                numerical_features=numerical_feautres,
+                categorical_features=categorical_features,
                 x_train=x_train,
-                x_test=x_test,
+                x_val=x_val,
                 y_train=y_train,
-                y_test=y_test,
-                experiment_id=experiment.experiment_id,
+                y_val=y_val,
+                experiment_id=experiment_id,
             ),
             space=search_space,
             algo=tpe.suggest,
@@ -106,26 +102,4 @@ def optimize(
             trials=trials,
             show_progressbar=True,
         )
-
-        pipeline = get_pipeline(
-            numerical_features=x_train.columns.tolist(),
-            categorical_features=[],
-        )
-        best_ = {key: int(value) for key, value in best.items()}
-        pipeline.set_params(**best_)
-        pipeline.fit(x_train, y_train)
-        predictions = pipeline.predict(x_test)
-        report = classification_report(y_test, predictions, output_dict=True)
-        mlflow.log_metrics(
-            {
-                "best_accuracy": accuracy_score(y_test, predictions),
-                "best_f1": f1_score(y_test, predictions, average="weighted"),
-                "best_recall": recall_score(y_test, predictions, average="weighted"),
-                "best_precision": precision_score(
-                    y_test, predictions, average="weighted"
-                ),
-            }
-        )
-        mlflow.sklearn.log_model(pipeline, "best_model")
-
-        return run.info.run_id
+    return best_params

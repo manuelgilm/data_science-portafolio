@@ -1,3 +1,9 @@
 experiment_name: wine_quality_v1
 description: Predict wine quality based on physicochemical tests
-label: quality
+registered_model_name: wine_quality_predictor
+aliases:
+  dev: Candidate
+  qa: Challenger
+  prod: Champion
+tags:
+  project_name: wine_quality
