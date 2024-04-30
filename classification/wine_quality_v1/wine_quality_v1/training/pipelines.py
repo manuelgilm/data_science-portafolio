@@ -11,8 +11,11 @@ from typing import Dict
 from typing import Any
 from typing import Optional
 
+
 def get_pipeline(
-    numerical_features: List[str], categorical_features: List[str], type: Optional[str] = "classification"
+    numerical_features: List[str],
+    categorical_features: List[str],
+    type: Optional[str] = "classification",
 ) -> Pipeline:
     """
     Returns a pipeline for the wine dataset.

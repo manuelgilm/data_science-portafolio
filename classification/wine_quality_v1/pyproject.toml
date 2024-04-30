@@ -6,8 +6,11 @@ authors = ["Manuel Gil <manuelgilsitio@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.scripts]
+prepare_data = 'wine_quality_v1.run:data_processing'
 run = 'wine_quality_v1.run:main'
+evaluate = 'wine_quality_v1.run:evaluate'
 predict = 'wine_quality_v1.predictions.scoring:get_predictions'
+
 
 [tool.poetry.dependencies]
 python = "^3.9"
@@ -18,6 +21,7 @@ ucimlrepo = "^0.0.3"
 hyperopt = "^0.2.7"
 pytest = "^7.4.4"
 jupyter = "^1.0.0"
+seaborn = "^0.13.2"
 
 
 [build-system]

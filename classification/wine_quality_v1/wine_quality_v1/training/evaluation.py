@@ -35,8 +35,6 @@ def get_classification_metrics(
         f"{prefix}_f1": f1,
         f"{prefix}_recall": recall,
         f"{prefix}_precision": precision,
-
     }
 
     return metrics
-

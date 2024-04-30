@@ -1,0 +1,5 @@
+output_folder: output
+sets:
+  train: train_winequality.csv
+  test: test_winequality.csv
+  val: val_winequality.csv
