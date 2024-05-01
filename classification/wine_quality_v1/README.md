@@ -40,6 +40,8 @@ The optimization is done using Tree of Parzen Estimators (TPE) algorithm. The op
 
 For data processing, the dataset is transformed into a binary classification problem, where 1 represents good quality and 0 represents bad quality. This transformation is mainly due to the significant imbalance in wine quality classes. Outlier removal is performed using the interquartile method.
 
+![wine classes](wine_classes_count.png)
+
 As part of the data processing workflow, three datasets are created: train, test, and validation (val). The train and validation datasets are used during the optimization process, while the test dataset is used to evaluate the model.
 
 ## USAGE
