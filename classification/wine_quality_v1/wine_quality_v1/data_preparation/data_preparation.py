@@ -97,5 +97,5 @@ def transform_to_binary(
     :param feature: feature.
     :return: dataframe.
     """
-    df[feature] = df[feature].apply(lambda x: 1 if x >= threshold else 0)
+    df[feature] = df[feature].apply(lambda x: 1 if x > threshold else 0)
     return df

@@ -58,3 +58,25 @@ def get_model(stage: Optional[str] = "prod"):
         raise e
 
     return model
+
+
+def get_run_id(experiment_name: str) -> str:
+    """
+    Get the run ID of a run.
+
+    :param run_name: name of the run.
+    :param experiment_id: ID of the experiment.
+    :return: run ID.
+    """
+    experiment = mlflow.get_experiment_by_name(experiment_name)
+    try:
+        runs = mlflow.search_runs(
+            experiment_ids=[experiment.experiment_id],
+            max_results=1,
+            filter_string=f"tags.mlflow.runName LIKE 'run-opt-%'",
+            output_format="list",
+        )[0]
+    except IndexError:
+        raise ValueError("No runs found.")
+
+    return runs.info.run_id

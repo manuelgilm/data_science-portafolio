@@ -3,19 +3,13 @@ from functools import partial
 from typing import Any
 from typing import Dict
 from typing import List
+from typing import Tuple
 import mlflow
 import pandas as pd
 from hyperopt import Trials
 from hyperopt import fmin
 from hyperopt import hp
 from hyperopt import tpe
-from sklearn.metrics import accuracy_score
-from sklearn.metrics import classification_report
-from sklearn.metrics import f1_score
-from sklearn.metrics import precision_score
-from sklearn.metrics import recall_score
-from wine_quality_v1.training.mlflow_utils import get_or_create_experiment
-from wine_quality_v1.training.pipelines import get_pipeline
 from wine_quality_v1.training.pipelines import train
 from wine_quality_v1.training.evaluation import get_classification_metrics
 
@@ -54,11 +48,11 @@ def objective_function(
     with mlflow.start_run(experiment_id=experiment_id, nested=True) as run:
         print("Run ID:", run.info.run_id)
         predictions = pipeline.predict(x_val)
-        test_metrics = get_classification_metrics(
+        val_metrics = get_classification_metrics(
             y_pred=predictions, y_true=y_val, prefix="val"
         )
-        mlflow.log_metrics(metrics=test_metrics)
-        return -test_metrics["val_f1"]
+        mlflow.log_metrics(metrics=val_metrics)
+        return -val_metrics["val_f1"]
 
 
 def optimize(
@@ -69,7 +63,7 @@ def optimize(
     x_val: pd.DataFrame,
     y_train: pd.DataFrame,
     y_val: pd.DataFrame,
-) -> str:
+) -> Tuple[Dict[str, Any], str]:
     """ """
 
     search_space = {
@@ -82,7 +76,7 @@ def optimize(
     }
 
     trials = Trials()
-    run_name = f"run-{str(datetime.now())}"
+    run_name = f"run-opt-{str(datetime.now())}"
     with mlflow.start_run(run_name=run_name) as run:
         print("Run ID:", run.info.run_id)
         best_params = fmin(
@@ -102,4 +96,4 @@ def optimize(
             trials=trials,
             show_progressbar=True,
         )
-    return best_params
+    return best_params, run.info.run_id

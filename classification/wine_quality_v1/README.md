@@ -1,4 +1,6 @@
-# Wine Quality Prediction
+# Wine Quality Prediction (as a Binary Classification Problem)
+
+![Wine Quality]("ml_essential_tool.jpg")
 
 ## Introduction
 
@@ -34,4 +36,60 @@ The model is optimized using Hyperopt. The hyperparameters optimized are:
 
 The optimization is done using Tree of Parzen Estimators (TPE) algorithm. The optimization is done using 20 iterations.
 
+## Data Processing. 
 
+For data processing, the dataset is transformed into a binary classification problem, where 1 represents good quality and 0 represents bad quality. This transformation is mainly due to the significant imbalance in wine quality classes. Outlier removal is performed using the interquartile method.
+
+As part of the data processing workflow, three datasets are created: train, test, and validation (val). The train and validation datasets are used during the optimization process, while the test dataset is used to evaluate the model.
+
+## USAGE
+
+### **Clone the repository** 
+
+```bash 
+git clone https://github.com/manuelgilm/data_science-portafolio
+cd classification/wine_quality_v1
+```
+
+### **Install The Package and create virtual environment** 
+run:
+```bash
+poetry install
+```
+This will create a `.venv` folder within the project.
+
+### **Run Data Preparation** 
+run:
+```bash
+poetry run prepare_data
+```
+
+This will create the three datasets Train/test/validation in the folder `output`
+
+### **Training and Optimize a Model**
+
+run:
+```bash
+poetry run run
+```
+
+It will use hypropt to find the best parameters and log the best model using mlflow.
+The best model will also be registered with Mlflow Model Registry
+
+### **Evaluate the model**
+run:
+```bash
+poetry run evaluate
+```
+
+This will score the test dataset and log the metrics in the best run.
+
+### **Start MLflow UI** 
+
+For visualizing the experiments on MLFlow UI
+
+run: 
+
+```bash
+poetry run mlflow ui
+```

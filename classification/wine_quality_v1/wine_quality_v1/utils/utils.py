@@ -5,7 +5,9 @@ from typing import Dict
 import yaml
 import pkgutil
 import pickle
-import pandas as pd 
+import pandas as pd
+
+
 def get_root_dir() -> Path:
     """
     Get the root directory of the project.
@@ -22,9 +24,10 @@ def read_config(path: str = "configuration") -> Dict[str, Any]:
     :param path: path to the config file.
     :return: config.
     """
-    data_bin = pkgutil.get_data("wine_quality_v1.configs", path+".yaml")
+    data_bin = pkgutil.get_data("wine_quality_v1.configs", path + ".yaml")
     config = yaml.safe_load(data_bin)
     return config
+
 
 def read_pickle(path: str) -> Any:
     """
@@ -38,13 +41,14 @@ def read_pickle(path: str) -> Any:
     path = root_dir / path
     if not path.exists():
         raise FileNotFoundError(f"File {path} not found.")
-    
+
     with open(str(path), "rb") as f:
         data = pickle.load(f)
 
     return data
 
-def read_set(name: str)-> pd.DataFrame:
+
+def read_set(name: str) -> pd.DataFrame:
     """
     Read a csv file.
 
@@ -52,11 +56,11 @@ def read_set(name: str)-> pd.DataFrame:
     :return: data.
     """
     root_dir = get_root_dir()
-    
+
     config = read_config("data_preparation")
     path = root_dir / config["output_folder"] / config["sets"][name]
     if not path.exists():
         raise FileNotFoundError(f"File {path} not found.")
-    
+
     data = pd.read_csv(path)
     return data
