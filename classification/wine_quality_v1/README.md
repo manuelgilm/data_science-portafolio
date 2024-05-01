@@ -1,6 +1,6 @@
 # Wine Quality Prediction (as a Binary Classification Problem)
 
-![Wine Quality]("ml_essential_tool.jpg")
+![Wine Quality](ml_essential_tool.jpg)
 
 ## Introduction
 
