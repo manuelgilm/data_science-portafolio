@@ -7,7 +7,12 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.11"
+mlflow = "^2.12.1"
+scikit-learn = "^1.4.2"
+pandas = "^2.2.2"
 
+[tool.poetry.scripts]
+test = 'factory_pattern_for_ml_comparison.entrypoints.test:main'
 
 [build-system]
 requires = ["poetry-core"]
