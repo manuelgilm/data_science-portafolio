@@ -1,0 +1,12 @@
+services:
+  mlapp:
+    build: ./ml_app
+    expose:
+      - 5000
+    
+    
+  monitoringapp: 
+    build: ./monitor_app
+    ports:
+    - 8501:8501
+    

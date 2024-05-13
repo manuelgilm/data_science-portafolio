@@ -9,7 +9,7 @@ def get_train_dataset()->pd.DataFrame:
     Gets the training dataset
     """
 
-    x, y = make_classification()
+    x, y = make_classification(n_features=5)
     df = pd.DataFrame(x , columns=[f"feature_{n}" for n in range(x.shape[1])])
     df["target"] = y
 
