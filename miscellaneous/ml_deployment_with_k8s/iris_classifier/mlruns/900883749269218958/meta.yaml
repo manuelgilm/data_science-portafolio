@@ -1,0 +1,6 @@
+artifact_location: file:///home/manuel/Documents/data_science-portafolio/miscellaneous/ml_deployment_with_k8s/iris_classifier/mlruns/900883749269218958
+creation_time: 1715628403840
+experiment_id: '900883749269218958'
+last_update_time: 1715628403840
+lifecycle_stage: active
+name: iris_classifier

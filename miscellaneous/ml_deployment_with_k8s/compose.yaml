@@ -1,8 +1,14 @@
 services:
-  mlapp:
-    build: ./ml_app
+  irisclassifier:
+    build: ./iris_classifier
     expose:
       - 5000
+    environment:
+      - MODE=SCORE
+  # mlapp:
+  #   build: ./ml_app
+  #   expose:
+  #     - 5000
     
     
   monitoringapp: 

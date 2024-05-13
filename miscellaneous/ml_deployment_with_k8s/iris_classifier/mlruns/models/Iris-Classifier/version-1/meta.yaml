@@ -1,0 +1,14 @@
+aliases: []
+creation_timestamp: 1715628405540
+current_stage: None
+description: null
+last_updated_timestamp: 1715628405540
+name: Iris-Classifier
+run_id: bce810afc20645308a2cbe88e749ee65
+run_link: null
+source: file:///home/manuel/Documents/data_science-portafolio/miscellaneous/ml_deployment_with_k8s/iris_classifier/mlruns/900883749269218958/bce810afc20645308a2cbe88e749ee65/artifacts/iris_classifier
+status: READY
+status_message: null
+storage_location: file:///home/manuel/Documents/data_science-portafolio/miscellaneous/ml_deployment_with_k8s/iris_classifier/mlruns/900883749269218958/bce810afc20645308a2cbe88e749ee65/artifacts/iris_classifier
+user_id: null
+version: 1

@@ -1,0 +1,3 @@
+experiment_name: iris_classifier
+model_artifact: iris_classifier
+registered_model_name: Iris-Classifier

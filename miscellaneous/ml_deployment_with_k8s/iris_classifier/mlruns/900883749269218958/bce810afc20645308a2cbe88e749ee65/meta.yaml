@@ -1,0 +1,15 @@
+artifact_uri: file:///home/manuel/Documents/data_science-portafolio/miscellaneous/ml_deployment_with_k8s/iris_classifier/mlruns/900883749269218958/bce810afc20645308a2cbe88e749ee65/artifacts
+end_time: 1715628405604
+entry_point_name: ''
+experiment_id: '900883749269218958'
+lifecycle_stage: active
+run_id: bce810afc20645308a2cbe88e749ee65
+run_name: gifted-bass-206
+run_uuid: bce810afc20645308a2cbe88e749ee65
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1715628404033
+status: 3
+tags: []
+user_id: manuel

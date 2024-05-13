@@ -15,9 +15,9 @@ forums](https://discuss.streamlit.io).
 
 In the meantime, below is an example of what you can do with just a few lines of code:
 """
-N_FEATURES = 5
-FEATURE_NAMES = [f"feature_{n}" for n in range(N_FEATURES)]
 
+FEATURE_NAMES = ["sepal length (cm)", "sepal width (cm)", "petal width (cm)", "petal length (cm)"]
+    
 def __is_valid_json(input):
     try:
         json.loads(input)
@@ -49,7 +49,7 @@ def get_payload(input):
 def make_request(payload):
 
     headers = {"Content-Type":"application/json"}
-    endpoint = "http://mlapp:5000/invocations"
+    endpoint = "http://irisclassifier:5000/invocations"
 
     response = requests.post(endpoint, data = json.dumps(payload), headers=headers)
 
