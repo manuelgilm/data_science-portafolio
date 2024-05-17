@@ -5,9 +5,13 @@ services:
       - 5000
     environment:
       - MODE=SCORE
+    volumes:
+      - mlflow-data:/iris_classifier
     
   monitoringapp: 
     build: ./monitor_app
     ports:
     - 8501:8501
     
+volumes:
+  mlflow-data:

@@ -58,6 +58,17 @@ def make_request(payload):
         return predictions
     else:
         return response.text
+    
+def check_status():
+    headers = {"Content-Type":"application/json"}
+    endpoint = "http://irisclassifier:5000/ping"
+
+    response = requests.get(endpoint, headers=headers)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        return response.text
+
 
 with st.echo(code_location='below'):
    
@@ -70,10 +81,12 @@ with st.echo(code_location='below'):
     st.write(payload)
     if payload:
         print(payload)
-
+        
         prediction = make_request(payload=payload)
         st.write("Your Prediction is")
         st.write(prediction)
+
+        
     else:
         st.write("Payload not Provided!")
 
