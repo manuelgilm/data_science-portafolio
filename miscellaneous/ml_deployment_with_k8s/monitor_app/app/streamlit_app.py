@@ -1,10 +1,8 @@
-from collections import namedtuple
-import altair as alt
-import math
-import pandas as pd
 import streamlit as st
 import requests
 import json
+
+from app.storage.base import Prediction
 """
 # Welcome to Streamlit!
 
@@ -73,18 +71,20 @@ def check_status():
 with st.echo(code_location='below'):
    
     input = st.text_area(label="features")
+    storage = Prediction("iris_classifier")
 
     st.write(f"You wrote {len(input)} characters.")
     st.write(input)
     payload = get_payload(input)
     st.write("Your input is")
     st.write(payload)
-    if payload:
-        print(payload)
-        
+    if payload:        
         prediction = make_request(payload=payload)
+        storage.save_value(prediction[0])
         st.write("Your Prediction is")
         st.write(prediction)
+        st.write("MY STORAGE")
+        st.write(storage.load_json())
 
         
     else:

@@ -12,6 +12,9 @@ services:
     build: ./monitor_app
     ports:
     - 8501:8501
+    volumes:
+      - monitoring-data:/app
     
 volumes:
   mlflow-data:
+  monitoring-data:
