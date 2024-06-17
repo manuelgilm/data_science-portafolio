@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: iris
+  namespace: iris
+  labels:
+    app: iris
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: iris
+  template:
+    metadata:
+      labels:
+        app: iris
+    spec:
+      containers:
+      - name: iris
+        image: gilsama/irisclassifier:v0.1.0
+        env:
+        - name: MODE
+          value: SCORE
+        ports:
+        - containerPort: 5000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: iris
+  namespace: iris
+  labels:
+    app: iris
+spec:
+  selector:
+    app: iris
+  ports:
+  - port: 80
+    targetPort: 5000
+  type: LoadBalancer 
+
+
