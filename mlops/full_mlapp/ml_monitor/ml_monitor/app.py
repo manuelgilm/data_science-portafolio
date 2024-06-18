@@ -1,44 +1,41 @@
 from flask import Flask
-from flask import request 
-import os 
-import json 
+from flask import request
+import os
+import json
 import requests
+
+from ml_monitor.utils.utils import get_url
+
 app = Flask(__name__)
 
 tasks = {
-    "Hi":"Hi, I am a task inside the app",
+    "Hi": "Hi, I am a task inside the app",
 }
-def validate_inference_schema(data):
-    if "dataframe_split" not in data:
-        return False, "dataframe_split is missing"
-    
-    if "columns" not in data["dataframe_split"]:
-        return False, "columns is missing"
-    
-    if "data" not in data["dataframe_split"]:
-        return False, "data is missing"
-    
-    return True, "Success"
+
 
 def get_model_prediction(payload):
-    host = os.environ.get("IRIS_SERVICE_HOST", None)   
-    port = os.environ.get("IRIS_SERVICE_PORT", None)
-    if host is None or port is None:
-        return "IRIS_SERVICE_HOST or IRIS_SERVICE_PORT not found"
-    headers = {
-    'Content-Type': 'application/json',
+    config = {
+        "service_name": "iris",
     }
-    response = requests.post(f'http://{host}:{port}/invocations', headers=headers, data=json.dumps(payload))
+    service_name = config["service_name"]
+    url = get_url(service_name)
+
+    headers = {
+        "Content-Type": "application/json",
+    }
+    endpoint = url + "/invocations"
+    response = requests.post(endpoint, headers=headers, data=json.dumps(payload))
     return response.json()
+
 
 @app.route("/prediction", methods=["POST"])
 def get_prediction():
     # get the data from the request
     data_json = request.get_json()
     prediction = get_model_prediction(data_json)
-    prediction.update({"status":"success"})
+    prediction.update({"status": "success"})
     return prediction
-    
+
     # payload = {"dataframe_split":
     #     {"columns":[
     #         "sepal length (cm)",
@@ -50,6 +47,7 @@ def get_prediction():
     #         [5.1,3.5,1.4,0.2]]
     #     }
     # }
+
 
 # #post method
 # @app.route("/resource", methods=["POST"])
@@ -68,9 +66,9 @@ def get_prediction():
 
 #     if task is None:
 #         return "Task not found"
-    
-#     return task + " " + value
-    
 
-if __name__ == "__main__":             
-    app.run(host='0.0.0.0',port = 5000, debug=True) 
+#     return task + " " + value
+
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000, debug=True)
