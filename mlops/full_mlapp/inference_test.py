@@ -20,4 +20,3 @@ headers = {
 response = requests.post('http://172.175.208.114:8080/prediction', headers=headers, data=json.dumps(payload))
 
 print(response.json())
-# print(response.text)
