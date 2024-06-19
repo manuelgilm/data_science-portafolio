@@ -5,5 +5,5 @@ COPY . /ml_monitor
 ENV PYTHONPATH=${PYTHONPATH}:${PWD}
 RUN pip3 install poetry 
 RUN poetry install  
-EXPOSE 5000
-CMD ["poetry", "run", "python", "ml_monitor/app.py", "--host=0.0.0.0", "--port=5000"]
+EXPOSE 8501
+CMD ["poetry", "run", "python","-m", "streamlit","run", "ml_monitor/streamlit_app.py", "--server.address=0.0.0.0", "--server.port=8501","--server.enableCORS=false", "--server.enableXsrfProtection=false"]

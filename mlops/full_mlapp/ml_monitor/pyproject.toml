@@ -9,6 +9,7 @@ readme = "README.md"
 python = "^3.11"
 flask = "^3.0.3"
 requests = "^2.32.3"
+streamlit = "^1.35.0"
 
 
 [build-system]
