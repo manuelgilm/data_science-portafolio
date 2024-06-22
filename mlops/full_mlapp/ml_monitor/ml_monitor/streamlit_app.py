@@ -3,6 +3,11 @@ from ml_monitor.utils.utils import get_payload
 from ml_monitor.inference.model import get_model_prediction
 import streamlit as st 
 
+species_map = {
+    0: "Setosa",
+    1: "Versicolor",
+    2: "Virginica"
+}
 st.markdown("# Iris Classifier")
 st.markdown("This is a simple Iris classifier that uses a Random Forest model to predict the species of an Iris flower based on its sepal and petal measurements.")
 # add local image
@@ -21,7 +26,5 @@ if st.sidebar.button("Predict"):
     st.write("Predicting...")
     # print the payload
     payload = get_payload(sepal_length, sepal_width, petal_length, petal_width)
-    st.write(payload)
-    # payload = get_payload(sepal_length, sepal_width, petal_length, petal_width)
-    # prediction = get_model_prediction(payload)
-    # st.write(f"Prediction: {prediction}")
+    prediction = get_model_prediction(payload)
+    st.write(f"Flower Species: {species_map[prediction['predictions'][0]]}")

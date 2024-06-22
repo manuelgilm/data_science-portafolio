@@ -1,13 +1,13 @@
 import json 
 import requests
 from ml_monitor.utils.utils import get_url
+import os 
 
 def get_model_prediction(payload):
-    config = {
-        "service_name": "iris",
-    }
-    service_name = config["service_name"]
-    url = get_url(service_name)
+    target_service = os.environ.get("TARGET_SERVICE", None)
+    if target_service is None:
+        raise ValueError("TARGET_SERVICE environment variable is not set.")
+    url = get_url(target_service)
 
     headers = {
         "Content-Type": "application/json",
