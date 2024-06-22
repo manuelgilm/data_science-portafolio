@@ -1,7 +1,8 @@
-import json 
+import json
 import requests
 from ml_monitor.utils.utils import get_url
-import os 
+import os
+
 
 def get_model_prediction(payload):
     target_service = os.environ.get("TARGET_SERVICE", None)
