@@ -1,0 +1,22 @@
+services:
+  irisclassifier:
+    build: ./iris_classifier
+    expose:
+      - 5000
+    environment:
+      - MODE=SCORE
+    volumes:
+      - mlflow-data:/iris_classifier
+    image: gilsama/irisclassifier:v0.1.0
+    
+  monitoringapp: 
+    build: ./monitor_app
+    ports:
+    - 8501:8501
+    volumes:
+      - monitoring-data:/app
+    image: gilsama/streamlitapp:v0.1.0
+    
+volumes:
+  mlflow-data:
+  monitoring-data:

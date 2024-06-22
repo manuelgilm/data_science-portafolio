@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ml-application
+spec:
+  replicas: 3
+  revisionHistoryLimit: 1
+  selector:
+    matchLabels:
+      app: mlapp
+      env: prod
+  template:
+    metadata:
+      labels:
+        app: mlapp
+        env: prod
+    spec:
+      containers:
+      - name: irisclassifier
+        image: gilsama/irisclassifier:v0.1.0    
+        ports:
+        - containerPort: 5000
+        volumeMounts:
+        - name: mlflow-data
+          mountPath: /iris_classifier    
+      - name: monitoringapp
+        image: gilsama/streamlitapp:v0.1.0
+        ports:
+        - containerPort: 8501
+        volumeMounts:
+        - name: monitoring-data
+          mountPath: /app
+      volumes:
+        - name: mlflow-data
+        - name: monitoring-data
