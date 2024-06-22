@@ -7,7 +7,6 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.11"
-flask = "^3.0.3"
 requests = "^2.32.3"
 streamlit = "^1.35.0"
 st-gsheets-connection = "^0.0.4"

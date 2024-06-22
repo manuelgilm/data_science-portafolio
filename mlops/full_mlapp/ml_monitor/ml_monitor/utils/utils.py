@@ -5,6 +5,7 @@ from typing import Dict
 from typing import Any
 from pathlib import Path
 
+
 def get_record(payload: Dict[str, Any]) -> Dict[str, Any]:
     """
     Get the record from the payload
