@@ -4,7 +4,7 @@ This project deploys a simple machine learning model using Azure Kubernetes. The
 
 ## Iris classifier
 
-The machine learning model used for this project is a classic Iris classifier. You can find more information about this project in this link: ![Iris Classifier](https://github.com/manuelgilm/data_science-portafolio/blob/master/classification/iris_classifier/README.md)
+The machine learning model used for this project is a classic Iris classifier. You can find more information about this project in this link: [Iris Classifier](https://github.com/manuelgilm/data_science-portafolio/blob/master/classification/iris_classifier/README.md)
 
 
 ## Visualization.
