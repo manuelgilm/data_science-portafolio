@@ -11,4 +11,4 @@ The machine learning model used for this project is a classic Iris classifier. Y
 
 Streamlit was used to develop the interface. You can provide the feature input and observe past predictions through this interface.
 
-![Example Image](ml_monitor\ml_monitor\images\iris-app.jpeg)
+![Example Image](ml_monitor/ml_monitor/images/iris-app.jpeg)
