@@ -13,6 +13,8 @@ Streamlit was used to develop the interface. You can provide the feature input a
 
 ![Example Image](ml_monitor/ml_monitor/images/iris-app.jpeg)
 
+## Google Sheet Connection.
+
 ## Kubernetes Architecture.
 
 ## Contributing
