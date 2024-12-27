@@ -31,9 +31,11 @@ async def get_prediction(
         iris_features.petal_width,
     ]
     prediction = model.predict([process_features])
+    proba = model.predict_proba([process_features])
+    score = max(proba[0])
 
     # save prediction
-    iris_prediction = {**iris_features.model_dump(), "prediction": int(prediction[0])}
+    iris_prediction = {**iris_features.model_dump(), "prediction": int(prediction[0]), "score": score}
     manager.save_prediction(iris_prediction, session)
     # create response
     response = ModelResponse(

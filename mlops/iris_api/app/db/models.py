@@ -3,6 +3,7 @@ from sqlmodel import Field
 import uuid
 from datetime import datetime
 from typing import Optional
+from typing import List
 
 
 class Prediction(SQLModel, table=True):
@@ -13,4 +14,5 @@ class Prediction(SQLModel, table=True):
     petal_width: float
     ground_truth: Optional[int] = None
     prediction: int
+    score: float
     created_at: datetime = Field(default=datetime.now())
