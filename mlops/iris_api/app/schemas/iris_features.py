@@ -2,6 +2,13 @@ from pydantic import BaseModel
 from pydantic import field_validator
 from pydantic_core.core_schema import FieldValidationInfo
 from typing import Optional
+from enum import Enum
+
+
+class Species(Enum):
+    Iris_setosa: int = 0
+    Iris_versicolor: int = 1
+    Iris_virginica: int = 2
 
 
 class IrisFeatures(BaseModel):
@@ -9,6 +16,7 @@ class IrisFeatures(BaseModel):
     sepal_width: float
     petal_length: float
     petal_width: float
+    label: Optional[Species] = None
 
 
 class ModelResponse(BaseModel):

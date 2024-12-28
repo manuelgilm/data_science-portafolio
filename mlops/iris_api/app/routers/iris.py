@@ -3,6 +3,7 @@ from fastapi import HTTPException
 from fastapi import Depends
 from fastapi import status
 from sqlmodel import Session
+from app.routers.utils import process_features
 from app.schemas.iris_features import IrisFeatures
 from app.schemas.iris_features import ModelResponse
 from app.resources import Tracker
@@ -24,18 +25,18 @@ async def get_prediction(
     model = ml_models["model"]
     if model is None:
         return {"message": "Model not found"}
-    process_features = [
-        iris_features.sepal_length,
-        iris_features.sepal_width,
-        iris_features.petal_length,
-        iris_features.petal_width,
-    ]
-    prediction = model.predict([process_features])
-    proba = model.predict_proba([process_features])
+    features = process_features(iris_features)
+    prediction = model.predict(features)
+    proba = model.predict_proba(features)
     score = max(proba[0])
 
     # save prediction
-    iris_prediction = {**iris_features.model_dump(), "prediction": int(prediction[0]), "score": score}
+    iris_prediction = {
+        **iris_features.model_dump(),
+        "prediction": int(prediction[0]),
+        "score": score,
+        "ground_truth": iris_features.label.value,
+    }
     manager.save_prediction(iris_prediction, session)
     # create response
     response = ModelResponse(
