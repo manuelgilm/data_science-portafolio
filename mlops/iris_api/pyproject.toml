@@ -11,6 +11,7 @@ fastapi = {extras = ["standard"], version = "^0.115.6"}
 sqlmodel = "^0.0.22"
 pydantic = "^2.10.4"
 scikit-learn = "^1.6.0"
+alibi-detect = "^0.12.0"
 
 
 [build-system]

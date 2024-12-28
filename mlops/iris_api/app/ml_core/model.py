@@ -28,3 +28,7 @@ def train_model():
     model.fit(X_train, y_train)
     with open("app/ml_core/model.pkl", "wb") as f:
         pickle.dump(model, f)
+    # save the train data to use as reference
+    with open("app/ml_core/train_data.pkl", "wb") as f:
+        pickle.dump((X_train, y_train), f)
+

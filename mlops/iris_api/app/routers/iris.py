@@ -9,9 +9,8 @@ from app.schemas.iris_features import ModelResponse
 from app.resources import Tracker
 from app.db.db import get_session
 from app import ml_models
-
+import numpy as np
 iris_router = APIRouter()
-
 
 @iris_router.post(
     "/predict", status_code=status.HTTP_200_OK, response_model=ModelResponse
@@ -19,17 +18,28 @@ iris_router = APIRouter()
 async def get_prediction(
     iris_features: IrisFeatures,
     session: Session = Depends(get_session),
-    manager: Tracker = Depends(Tracker),
+    manager: Tracker = Depends(Tracker)
 ):
 
     model = ml_models["model"]
     if model is None:
         return {"message": "Model not found"}
+    
+    detector = ml_models["detector"]
+    if detector is None:
+        return {"message": "Detector not found"}
+    
     features = process_features(iris_features)
     prediction = model.predict(features)
     proba = model.predict_proba(features)
     score = max(proba[0])
 
+    # detecting drift
+    print("Detecting drift")
+    print("input")
+    print(np.array(features))
+    drift = detector.predict(np.array(features), drift_type="batch", return_p_val=True, return_distance=True)
+    print(drift)
     # save prediction
     iris_prediction = {
         **iris_features.model_dump(),
