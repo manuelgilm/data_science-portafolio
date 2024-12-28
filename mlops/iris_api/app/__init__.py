@@ -6,6 +6,7 @@ from contextlib import asynccontextmanager
 
 ml_models = {}
 from app.routers.iris import iris_router
+from app.routers.monitoring import monitor_router
 
 
 @asynccontextmanager
@@ -30,3 +31,4 @@ app = FastAPI(
 
 
 app.include_router(iris_router, tags=["Iris"], prefix=f"/{version}/iris")
+app.include_router(monitor_router, tags=["Monitoring"], prefix=f"/{version}/monitor")
