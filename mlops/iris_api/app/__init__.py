@@ -9,7 +9,6 @@ ml_models = {}
 from app.routers.iris import iris_router
 
 
-
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     ml_models["model"] = load_model("app/ml_core/model.pkl")
@@ -17,7 +16,6 @@ async def lifespan(app: FastAPI):
         train_model()
         ml_models["model"] = load_model("app/ml_core/model.pkl")
 
-    
     if ml_models.get("detector", None) is None:
         print("Loading reference data")
         x_ref, _ = load_model("app/ml_core/train_data.pkl")
