@@ -16,7 +16,7 @@ from gateway.auth.dependencies import AccessTokenBearer
 from gateway.db import add_jti_to_blacklist
 import os
 
-REFRESH_TOKEN_EXPIRY = os.environ["REFRESH_TOKEN_EXPIRY"]
+
 router = APIRouter()
 access_token_bearer = AccessTokenBearer()
 
@@ -67,7 +67,7 @@ async def login(
             "role": "user",
         },
         refresh=True,
-        expiry=timedelta(days=REFRESH_TOKEN_EXPIRY),
+        expiry=timedelta(days=os.environ["REFRESH_TOKEN_EXPIRY"]),
     )
 
     return JSONResponse(
