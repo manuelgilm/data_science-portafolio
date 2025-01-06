@@ -3,6 +3,8 @@ This project demonstrates how to deploy machine learning models as microservices
 
 ## Project Architecture.
 
+<TODO>
+
 ## How to test.
 To run the code, it is necessary to install Docker. For the next steps, assume that Docker is already installed.
 
