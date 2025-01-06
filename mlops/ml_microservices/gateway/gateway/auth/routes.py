@@ -14,9 +14,9 @@ from gateway.auth.jwt_utils import verify_password
 from datetime import timedelta
 from gateway.auth.dependencies import AccessTokenBearer
 from gateway.db import add_jti_to_blacklist
+import os
 
-
-REFRESH_TOKEN_EXPIRY = ""
+REFRESH_TOKEN_EXPIRY = os.environ["REFRESH_TOKEN_EXPIRY"]
 router = APIRouter()
 access_token_bearer = AccessTokenBearer()
 

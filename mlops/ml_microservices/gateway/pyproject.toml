@@ -11,6 +11,7 @@ fastapi = {extras = ["standard"], version = "^0.115.6"}
 sqlmodel = "^0.0.22"
 pydantic = "^2.10.4"
 redis = "^5.2.1"
+python-dotenv = "^1.0.1"
 
 
 [build-system]
