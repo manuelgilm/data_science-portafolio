@@ -18,7 +18,7 @@ def get_session():
 
 import redis.asyncio as aioredis
 
-token_blocklist = aioredis.from_url("redis://localhost:6379/0")
+token_blocklist = aioredis.from_url("redis://redis:6379/0")
 
 
 async def add_jti_to_blacklist(jti: str) -> None:

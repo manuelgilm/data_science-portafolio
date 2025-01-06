@@ -5,9 +5,9 @@ from fastapi import Request
 from fastapi.responses import JSONResponse
 
 services = {
-    "ml1": "http://localhost:8001",
-    "ml2": "http://localhost:8002",
-    "auth": "http://localhost:8000",
+    "ml1": "http://ml_service1:8001",
+    "ml2": "http://ml_service2:8002",
+    "auth": "http://gateway:8000",
 }
 
 

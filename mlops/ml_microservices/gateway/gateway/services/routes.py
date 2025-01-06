@@ -16,24 +16,3 @@ async def gateway(
 ):
     print("user_details", user_details)
     return await handle_request(service, path, request)
-
-
-# @router.post("/{service}/{path:path}")
-# async def gateway(service: str, path: str):
-#     return {"service": service, "path": path}
-
-# @router.delete("/{service}/{path:path}")
-# async def gateway(service: str, path: str):
-#     return {"service": service, "path": path}
-
-# @router.put("/{service}/{path:path}")
-# async def gateway(service: str, path: str):
-#     return {"service": service, "path": path}
-
-# @router.patch("/{service}/{path:path}")
-# async def gateway(service: str, path: str):
-#     return {"service": service, "path": path}
-
-# @router.options("/{service}/{path:path}")
-# async def gateway(service: str, path: str):
-#     return {"service": service, "path": path}

@@ -27,7 +27,7 @@ class TokenBearer(HTTPBearer):
                 status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token"
             )
 
-        if token_in_blacklist(token):
+        if await token_in_blacklist(token_data["jti"]):
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 detail="Token has been revoked",

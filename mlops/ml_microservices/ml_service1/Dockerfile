@@ -1,0 +1,9 @@
+FROM python:3.11
+RUN mkdir /ml_service1
+WORKDIR /ml_service1 
+COPY . /ml_service1
+ENV PYTHONPATH=${PYTHONPATH}:${PWD}
+RUN pip3 install poetry 
+RUN poetry install
+
+CMD ["poetry", "run", "fastapi", "dev","ml_service1", "--host", "0.0.0.0", "--port", "8001"]
