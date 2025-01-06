@@ -8,7 +8,7 @@ from typing import Optional
 from typing import Dict
 from typing import Any
 from gateway.auth.jwt_utils import decode_token
-
+from gateway.db import token_in_blacklist
 
 class TokenBearer(HTTPBearer):
 
@@ -25,6 +25,12 @@ class TokenBearer(HTTPBearer):
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token"
             )
+        
+        if token_in_blacklist(token):
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED, detail="Token has been revoked"
+            )
+
 
         return token_data
 

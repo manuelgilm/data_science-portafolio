@@ -51,7 +51,7 @@ async def login(
             status_code=status.HTTP_404_NOT_FOUND, detail="User not found"
         )
 
-    if not verify_password(user_login.password, user_login.hashed_password):
+    if not verify_password(user_login.password, user.hashed_password):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid password"
         )
@@ -67,7 +67,7 @@ async def login(
             "role": "user",
         },
         refresh=True,
-        expiry=timedelta(days=os.environ["REFRESH_TOKEN_EXPIRY"]),
+        expiry=timedelta(days=int(os.environ["REFRESH_TOKEN_EXPIRY"])),
     )
 
     return JSONResponse(
@@ -86,3 +86,16 @@ async def revoke_token(user_details: AccessTokenBearer = Depends(access_token_be
         status_code=status.HTTP_200_OK,
         content={"message": "Token revoked successfully"},
     )
+
+
+@router.get("/check")
+async def check_user():
+
+    return {"message": "Endpoint works"}
+
+
+@router.get("/protected")
+async def protected_route(
+    user_details: AccessTokenBearer = Depends(access_token_bearer),
+):
+    return {"message": "Protected route"}

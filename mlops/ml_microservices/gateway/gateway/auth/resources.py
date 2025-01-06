@@ -15,6 +15,7 @@ class UserManager:
             user_data_dict["password"]
         )
         user_data_dict["id_"] = uuid.uuid4()
+        user_data_dict["role"] = "user"
 
         user = User(**user_data_dict)
         session.add(user)
