@@ -15,4 +15,9 @@ async def gateway(
     user_details: AccessTokenBearer = Depends(AccessTokenBearer()),
 ):
     print("user_details", user_details)
-    return await handle_request(service, path, request)
+    user_data = {
+        "user_id": str(user_details["data"]["id"]),
+        "user_role": user_details["data"]["role"],
+    }
+    
+    return await handle_request(service, path, request, user_data)

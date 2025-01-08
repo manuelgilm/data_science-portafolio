@@ -3,6 +3,8 @@ from fastapi import FastAPI
 from fastapi import HTTPException
 from fastapi import Request
 from fastapi.responses import JSONResponse
+from typing import Dict 
+import json
 
 services = {
     "ml1": "http://ml_service1:8001",
@@ -20,7 +22,7 @@ async def forward_request(
         return response
 
 
-async def handle_request(service: str, path: str, request: Request):
+async def handle_request(service: str, path: str, request: Request, metadata: Dict):
     service_url = services.get(service)
     print("service_url", service_url)
     if not service_url:
@@ -29,5 +31,7 @@ async def handle_request(service: str, path: str, request: Request):
 
     body = await request.json() if method in ["POST", "PUT", "PATCH"] else {}
     headers = dict(request.headers)
+    headers["user_id"] = metadata.get("user_id", "")
+    headers["user_role"] = metadata.get("user_role", "")
     response = await forward_request(service_url, method, f"/{path}", body, headers)
     return JSONResponse(status_code=200, content={"content": response.json()})
