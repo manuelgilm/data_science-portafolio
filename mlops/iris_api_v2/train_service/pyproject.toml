@@ -8,6 +8,8 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.11"
 scikit-learn = "^1.6.1"
+fastapi = "^0.115.8"
+mlflow = "^2.20.1"
 
 
 [build-system]
