@@ -1,8 +1,6 @@
 services:
   tracking_service:
-    build: 
-      context: .
-      dockerfile: ./tracking_service/Dockerfile
+    image: ghcr.io/mlflow/mlflow:v2.20.1
     ports:
       - "5000:5000"
     environment:
@@ -11,6 +9,7 @@ services:
       MLFLOW_PORT : "5000"
     volumes:
       - mlflow-backend-store:/mlflow/backend/
+    command: ["mlflow", "server"]
 
 volumes:
   mlflow-backend-store:
