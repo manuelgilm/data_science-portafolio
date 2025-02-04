@@ -5,6 +5,10 @@ services:
       dockerfile: ./tracking_service/Dockerfile
     ports:
       - "5000:5000"
+    environment:
+      MLFLOW_BACKEND_STORE_URI : "sqlite:///mlflow/backend/mlflow.db"
+      MLFLOW_HOST : "0.0.0.0"
+      MLFLOW_PORT : "5000"
     volumes:
       - mlflow-backend-store:/mlflow/backend/
 
