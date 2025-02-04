@@ -1,0 +1,12 @@
+services:
+  tracking_service:
+    build: 
+      context: .
+      dockerfile: ./tracking_service/Dockerfile
+    ports:
+      - "5000:5000"
+    volumes:
+      - mlflow-backend-store:/mlflow/backend/
+
+volumes:
+  mlflow-backend-store:
