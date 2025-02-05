@@ -13,3 +13,5 @@ def train_model(x_train: pd.DataFrame, y_train: pd.Series) -> RandomForestClassi
     model = RandomForestClassifier()
     model.fit(x_train, y_train)
     return model
+
+

@@ -11,5 +11,15 @@ services:
       - mlflow-backend-store:/mlflow/backend/
     command: ["mlflow", "server"]
 
+  train_service:
+    build:
+      context: .
+      dockerfile: train_service/Dockerfile
+    ports:
+      - "8000:8000"
+    depends_on:
+      - tracking_service
+
+
 volumes:
   mlflow-backend-store:
