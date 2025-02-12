@@ -5,6 +5,9 @@ description = ""
 authors = ["Manuel Gil <manuelgilsitio@gmail.com>"]
 readme = "README.md"
 
+[tool.poetry.scripts]
+test = "train_service.src.entrypoints:main"
+
 [tool.poetry.dependencies]
 python = "^3.11"
 scikit-learn = "^1.6.1"

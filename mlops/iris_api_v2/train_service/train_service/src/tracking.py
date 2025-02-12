@@ -28,4 +28,3 @@ def get_or_create_experiment(
     experiment = mlflow.set_experiment(experiment_name=name)
 
     return experiment
-

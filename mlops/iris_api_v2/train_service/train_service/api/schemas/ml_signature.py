@@ -1,4 +1,4 @@
-from pydantic import BaseModel 
+from pydantic import BaseModel
 
 
 class ModelInput(BaseModel):
@@ -6,6 +6,7 @@ class ModelInput(BaseModel):
     sepal_width: float
     petal_length: float
     petal_width: float
+
 
 class ModelOutput(BaseModel):
     prediction: str
