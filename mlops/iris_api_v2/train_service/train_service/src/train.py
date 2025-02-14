@@ -1,10 +1,12 @@
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
+from train_service.src.utils import load_pickle, save_pickle
 from typing import Optional
 import pandas as pd
+from pathlib import Path 
 from typing import Tuple
-
+import os 
 
 class Trainer:
     def __init__(self, model:Optional[RandomForestClassifier] = None):
@@ -28,11 +30,9 @@ class Trainer:
         :param path: The path to the data
         :return: The data
         """
-        df = pd.read_csv(path)
-        if df.empty:
-            return None
-
-        return df
+        if Path(path).exists():
+            return load_pickle(path)
+        return None
 
     def get_train_test_data(
         self, test_size: Optional[float] = 0.2
@@ -59,14 +59,16 @@ class Trainer:
 
         :return: The features and target variable
         """
-        dataset = self._get_dataset_from_path("data/raw/iris.csv")
+        dataset_path = "data/raw/iris.pkl"
+        dataset = self._get_dataset_from_path(dataset_path)
         if dataset is None:
             dataset = load_iris(as_frame=True)
             # save the data to the raw folder
-            dataset.data.to_csv("data/raw/iris.csv", index=False)
+            # this will be a volume in the docker container
+            save_pickle(dataset, "data/raw/iris.pkl")
 
-        features = dataset.drop(columns=["target"])
-        target = dataset["target"]
+        features = dataset.data
+        target = dataset.target
 
         return features, target
 
