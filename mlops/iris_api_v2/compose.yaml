@@ -21,6 +21,10 @@ services:
     depends_on:
       - tracking_service
 
+    volumes:
+      - train-dataset:/app
+
 
 volumes:
   mlflow-backend-store:
+  train-dataset:

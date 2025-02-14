@@ -59,13 +59,13 @@ class Trainer:
 
         :return: The features and target variable
         """
-        dataset_path = "data/raw/iris.pkl"
+        dataset_path = "app/data/raw/iris.pkl"
         dataset = self._get_dataset_from_path(dataset_path)
         if dataset is None:
             dataset = load_iris(as_frame=True)
             # save the data to the raw folder
             # this will be a volume in the docker container
-            save_pickle(dataset, "data/raw/iris.pkl")
+            save_pickle(dataset, dataset_path)
 
         features = dataset.data
         target = dataset.target

@@ -13,3 +13,4 @@ RUN poetry install
 
 # Run the application
 CMD ["poetry", "run", "fastapi", "dev", "train_service","--host", "0.0.0.0", "--port", "8000"]
+
