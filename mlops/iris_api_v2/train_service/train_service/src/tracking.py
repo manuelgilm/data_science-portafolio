@@ -20,9 +20,9 @@ def get_or_create_experiment(
     if not experiment:
         print(f"Experiment '{name}' not found")
         # create the experiment if it does not exist
-        experiment = mlflow.create_experiment(name, tags)
+        experiment_id = mlflow.create_experiment(name, tags)
         print(f"Experiment '{name}' created")
-        print(f"Experiment ID: {experiment.experiment_id}")
+        print(f"Experiment ID: {experiment_id}")
 
     # set the experiment as the active experiment
     experiment = mlflow.set_experiment(experiment_name=name)

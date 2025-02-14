@@ -3,7 +3,8 @@ from fastapi import HTTPException
 from fastapi.responses import JSONResponse
 from fastapi import status
 import mlflow
-
+from train_service.src.train import Trainer
+from train_service.src.tracking import get_or_create_experiment
 train_router = APIRouter()
 
 
@@ -13,9 +14,14 @@ async def train_model():
     Request to train a model.
 
     """
-    # check if there is new data to train model
-
-    return {"message": "Model trained successfully"}
+    experiment = get_or_create_experiment("train_model")
+    try:
+        train_service = Trainer()
+        train_service.fit_model()
+    except Exception as e:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
+    
+    return JSONResponse(status_code=status.HTTP_200_OK, content={"message": "Model trained successfully"})
 
 
 @train_router.get("/models")

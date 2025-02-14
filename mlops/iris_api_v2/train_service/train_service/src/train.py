@@ -7,13 +7,24 @@ import pandas as pd
 from pathlib import Path 
 from typing import Tuple
 import os 
+import mlflow 
 
 class Trainer:
-    def __init__(self, model:Optional[RandomForestClassifier] = None):
-        self.model = model
+    def __init__(self):
+        self.model = RandomForestClassifier()
+        self.registered_model_name="iris_model"
 
     def fit_model(self):
-        pass
+
+        # get training data.
+        x_train, x_test, y_train, y_test = self.get_train_test_data()
+
+        # train the model
+        self.train_model(x_train, y_train)
+
+        # save the model 
+        with mlflow.start_run() as run:
+            mlflow.sklearn.log_model(self.model, "model", registered_model_name=self.registered_model_name)
 
     def _new_data_check(self) -> bool:
         """
