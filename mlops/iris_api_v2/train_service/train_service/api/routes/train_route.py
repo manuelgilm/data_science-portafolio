@@ -27,8 +27,8 @@ async def train_model():
 @train_router.get("/models")
 async def get_models():
     try:
-        models = mlflow.search_model_versions()
-        return JSONResponse(status_code=status.HTTP_200_OK, content=models.to_json())
+        models = mlflow.search_registered_models()
+        return JSONResponse(status_code=status.HTTP_200_OK, content=[model.name for model in models])
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))
 
