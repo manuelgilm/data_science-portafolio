@@ -14,7 +14,7 @@ async def train_model():
     Request to train a model.
 
     """
-    experiment = get_or_create_experiment("train_model")
+    _ = get_or_create_experiment("train_model")
     try:
         train_service = Trainer()
         train_service.fit_model()
